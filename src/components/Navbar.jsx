@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
-
-const navLinks = [
-  { label: 'Store',     path: '/store' },
-  { label: 'My Size',  path: '/size' },
-  { label: 'Styling',  path: '/events' },
-  { label: 'Wardrobe', path: '/wardrobe' },
-  { label: 'Business', path: '/business' },
-  { label: 'Pricing',  path: '/pricing' },
-];
+import { Menu, X, Globe } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Navbar() {
   const [open, setOpen]         = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location                = useLocation();
+  const { t, lang, toggleLang, isRTL } = useLanguage();
+
+  const navLinks = [
+    { label: t('nav_store'),    path: '/store' },
+    { label: t('nav_size'),     path: '/size' },
+    { label: t('nav_styling'),  path: '/events' },
+    { label: t('nav_wardrobe'), path: '/wardrobe' },
+    { label: t('nav_business'), path: '/business' },
+    { label: t('nav_pricing'),  path: '/pricing' },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -29,17 +31,14 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? 'glass border-b border-manikan-border shadow-soft'
-          : 'bg-transparent'
+        scrolled ? 'glass border-b border-manikan-border shadow-soft' : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* Logo — wordmark only */}
+          {/* Logo — wordmark */}
           <Link to="/" className="flex items-center gap-3 group shrink-0">
-            {/* M monogram */}
             <div className="w-9 h-9 rounded-xl bg-forest-700 flex items-center justify-center shadow-soft group-hover:bg-forest-600 transition-colors">
               <span className="font-display text-white text-lg font-bold leading-none tracking-tight">M</span>
             </div>
@@ -47,8 +46,8 @@ export default function Navbar() {
               <span className="font-display text-xl font-semibold text-forest-900 group-hover:text-forest-700 transition-colors tracking-wider">
                 MANIKAN
               </span>
-              <span className="text-[9px] tracking-[0.22em] text-gray-400 uppercase font-medium">
-                Virtual Tailoring
+              <span className="text-[9px] tracking-[0.18em] text-gray-400 uppercase font-medium">
+                {t('nav_tagline')}
               </span>
             </div>
           </Link>
@@ -60,9 +59,7 @@ export default function Navbar() {
                 key={link.path}
                 to={link.path}
                 className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
-                  isActive(link.path)
-                    ? 'text-forest-700'
-                    : 'text-gray-600 hover:text-forest-700'
+                  isActive(link.path) ? 'text-forest-700' : 'text-gray-600 hover:text-forest-700'
                 }`}
               >
                 {link.label}
@@ -73,19 +70,29 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CTA */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* CTA + Language toggle */}
+          <div className="hidden md:flex items-center gap-2">
+            {/* Language toggle */}
+            <button
+              onClick={toggleLang}
+              title={lang === 'en' ? 'Switch to Arabic' : 'Switch to English'}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-manikan-border text-sm font-medium text-forest-700 hover:bg-forest-50 hover:border-forest-200 transition-all"
+            >
+              <Globe size={14} />
+              <span className="font-semibold">{lang === 'en' ? 'عربي' : 'EN'}</span>
+            </button>
+
             <Link
               to="/store"
               className="px-4 py-2 text-sm font-medium text-gold-600 hover:text-gold-700 transition-colors"
             >
-              Try Demo
+              {t('nav_try_demo')}
             </Link>
             <Link
               to="/business"
               className="px-5 py-2.5 bg-gold-400 text-forest-900 text-sm font-semibold rounded-xl hover:bg-gold-500 transition-all duration-200 shadow-gold hover:shadow-md"
             >
-              For Business
+              {t('nav_for_biz')}
             </Link>
           </div>
 
@@ -117,17 +124,18 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="mt-4 flex flex-col gap-2 pt-3 border-t border-manikan-border">
-            <Link
-              to="/store"
-              className="w-full text-center px-4 py-2.5 border border-manikan-border rounded-xl text-sm font-medium text-forest-700 hover:bg-forest-50 transition-colors"
+            <button
+              onClick={toggleLang}
+              className="flex items-center justify-center gap-2 w-full px-4 py-2.5 border border-manikan-border rounded-xl text-sm font-medium text-forest-700 hover:bg-forest-50 transition-colors"
             >
-              Try Demo
-            </Link>
+              <Globe size={14} />
+              {lang === 'en' ? 'عربي' : 'English'}
+            </button>
             <Link
               to="/business"
-              className="w-full text-center px-4 py-2.5 bg-forest-700 text-white rounded-xl text-sm font-medium hover:bg-forest-800 transition-colors"
+              className="w-full text-center px-4 py-2.5 bg-gold-400 text-forest-900 rounded-xl text-sm font-semibold hover:bg-gold-500 transition-colors"
             >
-              For Business
+              {t('nav_for_biz')}
             </Link>
           </div>
         </div>

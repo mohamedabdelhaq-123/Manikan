@@ -5,6 +5,7 @@ import SectionHeader from '../components/SectionHeader';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
 import ConfidenceBar from '../components/ConfidenceBar';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const categories = ['All', 'Tops', 'Bottoms', 'Dresses', 'Outerwear'];
 
@@ -15,6 +16,7 @@ const tabs = [
 ];
 
 export default function WardrobeDashboard() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab]           = useState('wardrobe');
   const [activeCategory, setActiveCategory] = useState('All');
   const [useWardrobe, setUseWardrobe]       = useState(true);

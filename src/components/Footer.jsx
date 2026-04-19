@@ -1,30 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Twitter, Linkedin, Instagram } from 'lucide-react';
-
-const footerLinks = {
-  Product: [
-    { label: 'Demo Store',    path: '/store' },
-    { label: 'Size Finder',   path: '/size' },
-    { label: 'Smart Styling', path: '/events' },
-    { label: 'Wardrobe',      path: '/wardrobe' },
-    { label: 'Visualization', path: '/visualize' },
-  ],
-  Business: [
-    { label: 'For Retailers',  path: '/business' },
-    { label: 'Pricing',        path: '/pricing' },
-    { label: 'API & Widget',   path: '/business' },
-    { label: 'Case Studies',   path: '/business' },
-  ],
-  Company: [
-    { label: 'About',    path: '/' },
-    { label: 'Blog',     path: '/' },
-    { label: 'Careers',  path: '/' },
-    { label: 'Contact',  path: '/' },
-  ],
-};
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
+  const footerLinks = {
+    [t('footer_product')]: [
+      { label: t('footer_demo'),     path: '/store' },
+      { label: t('footer_size'),     path: '/size' },
+      { label: t('footer_styling'),  path: '/events' },
+      { label: t('footer_wardrobe'), path: '/wardrobe' },
+      { label: t('footer_visual'),   path: '/visualize' },
+    ],
+    [t('footer_biz')]: [
+      { label: t('footer_retail'),   path: '/business' },
+      { label: t('footer_pricing'),  path: '/pricing' },
+      { label: t('footer_api'),      path: '/business' },
+      { label: t('footer_cases'),    path: '/business' },
+    ],
+    [t('footer_company')]: [
+      { label: t('footer_about'),    path: '/' },
+      { label: t('footer_blog'),     path: '/' },
+      { label: t('footer_careers'),  path: '/' },
+      { label: t('footer_contact'),  path: '/' },
+    ],
+  };
+
   return (
     <footer className="bg-forest-950 mt-0">
       {/* Top gradient accent */}
@@ -41,21 +44,20 @@ export default function Footer() {
               </div>
               <div className="flex flex-col leading-none">
                 <span className="font-display text-xl font-semibold text-white tracking-wider">MANIKAN</span>
-                <span className="text-[9px] tracking-[0.22em] text-forest-400 uppercase font-medium">Virtual Tailoring</span>
+                <span className="text-[9px] tracking-[0.22em] text-forest-400 uppercase font-medium">{t('nav_tagline')}</span>
               </div>
             </Link>
 
             <p className="text-sm text-forest-300 leading-relaxed max-w-xs mb-6">
-              Helping fashion brands reduce returns, improve fit accuracy, and deliver
-              a smarter shopping experience — for every body, every style.
+              {t('footer_desc')}
             </p>
 
             <div className="flex items-center gap-4">
               {[
-                { icon: Mail,      href: 'mailto:hello@manikan.io',  label: 'Email' },
-                { icon: Twitter,   href: '#',                        label: 'Twitter' },
-                { icon: Linkedin,  href: '#',                        label: 'LinkedIn' },
-                { icon: Instagram, href: '#',                        label: 'Instagram' },
+                { icon: Mail,      href: 'mailto:hello@manikan.io', label: 'Email' },
+                { icon: Twitter,   href: '#',                       label: 'Twitter' },
+                { icon: Linkedin,  href: '#',                       label: 'LinkedIn' },
+                { icon: Instagram, href: '#',                       label: 'Instagram' },
               ].map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
@@ -91,12 +93,12 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-14 pt-6 border-t border-forest-800 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-forest-500">© 2026 Manikan Technologies. All rights reserved.</p>
+          <p className="text-xs text-forest-500">{t('footer_copy')}</p>
           <div className="flex items-center gap-4">
-            <p className="text-xs text-forest-600">Built for the pitch — mock data only.</p>
+            <p className="text-xs text-forest-600">{t('footer_mock')}</p>
             <div className="flex items-center gap-1.5 text-xs text-forest-500">
               <span className="w-1.5 h-1.5 bg-forest-500 rounded-full animate-pulse" />
-              AI-Powered Sizing for Everyone
+              {t('footer_ai')}
             </div>
           </div>
         </div>

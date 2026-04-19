@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
@@ -20,7 +21,7 @@ function ScrollToTop() {
 
 function Layout({ children }) {
   return (
-    <div className="min-h-screen flex flex-col bg-warm-bg">
+    <div className="min-h-screen flex flex-col bg-manikan-bg">
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
@@ -30,21 +31,23 @@ function Layout({ children }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Layout>
-        <Routes>
-          <Route path="/"                   element={<LandingPage />} />
-          <Route path="/store"              element={<StorePage />} />
-          <Route path="/store/:id"          element={<ProductPage />} />
-          <Route path="/size"               element={<SizeRecommendation />} />
-          <Route path="/events"             element={<EventStyling />} />
-          <Route path="/visualize"          element={<Visualization />} />
-          <Route path="/wardrobe"           element={<WardrobeDashboard />} />
-          <Route path="/business"           element={<BusinessPage />} />
-          <Route path="/pricing"            element={<PricingPage />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <Layout>
+          <Routes>
+            <Route path="/"           element={<LandingPage />} />
+            <Route path="/store"      element={<StorePage />} />
+            <Route path="/store/:id"  element={<ProductPage />} />
+            <Route path="/size"       element={<SizeRecommendation />} />
+            <Route path="/events"     element={<EventStyling />} />
+            <Route path="/visualize"  element={<Visualization />} />
+            <Route path="/wardrobe"   element={<WardrobeDashboard />} />
+            <Route path="/business"   element={<BusinessPage />} />
+            <Route path="/pricing"    element={<PricingPage />} />
+          </Routes>
+        </Layout>
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }
