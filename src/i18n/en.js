@@ -234,6 +234,26 @@ const en = {
   pricing_feat_sc7: 'Custom integrations & API access',
   pricing_feat_sc8: 'White-label widget option',
   pricing_currency: 'EGP',
+
+  // Event Styling page
+  event_label:        'Smart Event Styling',
+  event_title:        'Dressed for every occasion, automatically.',
+  event_subtitle:     'SmartFit reads your upcoming events and suggests complete outfits — from your existing wardrobe first, with smart shopping suggestions when needed.',
+  event_connected_cal:'Connected Calendars',
+  event_add_cal:      'Add calendar',
+  event_connected:    'Connected',
+  event_connect:      'Connect',
+  event_use_wardrobe: 'Use my wardrobe first',
+  event_wardrobe_mode:'Wardrobe mode on — outfit suggestions prioritise clothes you already own.',
+  event_no_events:    'No events for this type.',
+  event_missing:      'Have an event not on your calendar?',
+  event_add_manual:   'Add Event Manually',
+  stat_wardrobe_label:'Outfits using your wardrobe',
+  stat_wardrobe_sub:  'No purchase needed',
+  stat_purchase_label:'Smart purchase suggestions',
+  stat_purchase_sub:  'High-impact additions',
+  stat_savings_label: 'Estimated savings this month',
+  stat_savings_sub:   'vs. buying new',
 };
 
 export default en;

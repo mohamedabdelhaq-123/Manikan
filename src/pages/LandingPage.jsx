@@ -771,10 +771,8 @@ export default function LandingPage() {
               {/* decorative top accent */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-forest-500 via-forest-300 to-forest-500" />
 
-              {/* M monogram instead of logo */}
-              <div className="w-16 h-16 rounded-2xl bg-forest-700 flex items-center justify-center mx-auto mb-6 shadow-soft">
-                <span className="font-display text-white text-3xl font-bold leading-none">M</span>
-              </div>
+              {/* Logo */}
+              <img src="/logo.png" className="h-24 w-auto object-contain mx-auto mb-6" alt="Manikan" />
 
               <h2 className="text-4xl sm:text-5xl font-display text-forest-900 mb-4 leading-tight">
                 {t('cta_title')}

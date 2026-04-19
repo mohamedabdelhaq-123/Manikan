@@ -4,18 +4,18 @@ import { Menu, X, Globe } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Navbar() {
-  const [open, setOpen]         = useState(false);
+  const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const location                = useLocation();
+  const location = useLocation();
   const { t, lang, toggleLang, isRTL } = useLanguage();
 
   const navLinks = [
-    { label: t('nav_store'),    path: '/store' },
-    { label: t('nav_size'),     path: '/size' },
-    { label: t('nav_styling'),  path: '/events' },
+    { label: t('nav_store'), path: '/store' },
+    { label: t('nav_size'), path: '/size' },
+    { label: t('nav_styling'), path: '/events' },
     { label: t('nav_wardrobe'), path: '/wardrobe' },
     { label: t('nav_business'), path: '/business' },
-    { label: t('nav_pricing'),  path: '/pricing' },
+    { label: t('nav_pricing'), path: '/pricing' },
   ];
 
   useEffect(() => {
@@ -30,26 +30,15 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? 'glass border-b border-manikan-border shadow-soft' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'glass border-b border-manikan-border shadow-soft' : 'bg-transparent'
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-24">
 
           {/* Logo — wordmark */}
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-forest-700 flex items-center justify-center shadow-soft group-hover:bg-forest-600 transition-colors">
-              <span className="font-display text-white text-lg font-bold leading-none tracking-tight">M</span>
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="font-display text-xl font-semibold text-forest-900 group-hover:text-forest-700 transition-colors tracking-wider">
-                MANIKAN
-              </span>
-              <span className="text-[9px] tracking-[0.18em] text-gray-400 uppercase font-medium">
-                {t('nav_tagline')}
-              </span>
-            </div>
+          <Link to="/" className="shrink-0">
+            <img src="/logo.png" className="h-24 w-auto object-contain" alt="Manikan" />
           </Link>
 
           {/* Desktop Nav */}
@@ -58,14 +47,12 @@ export default function Navbar() {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${
-                  isActive(link.path) ? 'text-forest-700' : 'text-gray-600 hover:text-forest-700'
-                }`}
+                className={`relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 group ${isActive(link.path) ? 'text-forest-700' : 'text-gray-600 hover:text-forest-700'
+                  }`}
               >
                 {link.label}
-                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gold-500 rounded-full transition-all duration-300 ${
-                  isActive(link.path) ? 'w-4/5' : 'w-0 group-hover:w-4/5'
-                }`} />
+                <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 bg-gold-500 rounded-full transition-all duration-300 ${isActive(link.path) ? 'w-4/5' : 'w-0 group-hover:w-4/5'
+                  }`} />
               </Link>
             ))}
           </nav>
@@ -114,11 +101,10 @@ export default function Navbar() {
             <Link
               key={link.path}
               to={link.path}
-              className={`block px-4 py-3 rounded-xl text-sm font-medium mb-1 transition-all ${
-                isActive(link.path)
-                  ? 'bg-forest-50 text-forest-700 border border-forest-100'
-                  : 'text-gray-700 hover:bg-forest-50 hover:text-forest-700'
-              }`}
+              className={`block px-4 py-3 rounded-xl text-sm font-medium mb-1 transition-all ${isActive(link.path)
+                ? 'bg-forest-50 text-forest-700 border border-forest-100'
+                : 'text-gray-700 hover:bg-forest-50 hover:text-forest-700'
+                }`}
             >
               {link.label}
             </Link>

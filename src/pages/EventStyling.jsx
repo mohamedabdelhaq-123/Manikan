@@ -24,6 +24,7 @@ const typeColors = {
 export default function EventStyling() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [useWardrobe, setUseWardrobe]   = useState(true);
+  const { t } = useLanguage();
 
   const types   = ['All', ...new Set(upcomingEvents.map((e) => e.type))];
   const filtered = activeFilter === 'All'
@@ -34,17 +35,17 @@ export default function EventStyling() {
     <div className="pt-24 min-h-screen">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <SectionHeader
-          label="Smart Event Styling"
-          title="Dressed for every occasion, automatically."
-          subtitle="SmartFit reads your upcoming events and suggests complete outfits — from your existing wardrobe first, with smart shopping suggestions when needed."
+          label={t('event_label')}
+          title={t('event_title')}
+          subtitle={t('event_subtitle')}
         />
 
         {/* Calendar connections */}
         <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5 mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-gray-900">Connected Calendars</h3>
+            <h3 className="text-sm font-semibold text-gray-900">{t('event_connected_cal')}</h3>
             <button className="text-xs text-forest-600 hover:text-forest-600 flex items-center gap-1 font-medium">
-              <Plus size={12} /> Add calendar
+              <Plus size={12} /> {t('event_add_cal')}
             </button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -61,7 +62,7 @@ export default function EventStyling() {
                 <div className="min-w-0">
                   <p className="text-xs font-medium text-gray-700 truncate">{cal.label}</p>
                   <p className={`text-xs ${cal.connected ? 'text-forest-600' : 'text-gray-400'}`}>
-                    {cal.connected ? 'Connected' : 'Connect'}
+                    {cal.connected ? t('event_connected') : t('event_connect')}
                   </p>
                 </div>
               </div>
@@ -90,7 +91,7 @@ export default function EventStyling() {
 
           {/* Wardrobe toggle */}
           <div className="flex items-center gap-2.5 bg-white border border-manikan-border rounded-xl px-4 py-2.5 shadow-soft shrink-0">
-            <span className="text-xs font-medium text-gray-600">Use my wardrobe first</span>
+            <span className="text-xs font-medium text-gray-600">{t('event_use_wardrobe')}</span>
             <button
               onClick={() => setUseWardrobe(!useWardrobe)}
               className={`relative w-9 h-5 rounded-full transition-colors ${useWardrobe ? 'bg-forest-600' : 'bg-gray-200'}`}
@@ -103,7 +104,7 @@ export default function EventStyling() {
         {useWardrobe && (
           <div className="bg-forest-50 border border-forest-100 rounded-xl px-4 py-3 mb-6 flex items-center gap-2.5 text-sm text-forest-700">
             <RefreshCw size={14} className="shrink-0" />
-            Wardrobe mode on — outfit suggestions prioritise clothes you already own.
+            {t('event_wardrobe_mode')}
           </div>
         )}
 
@@ -112,7 +113,7 @@ export default function EventStyling() {
           {filtered.length === 0 ? (
             <div className="text-center py-16 bg-white rounded-2xl border border-manikan-border">
               <Calendar size={32} className="text-gray-200 mx-auto mb-3" />
-              <p className="text-gray-400 text-sm">No events for this type.</p>
+              <p className="text-gray-400 text-sm">{t('event_no_events')}</p>
             </div>
           ) : (
             filtered.map((event) => <EventCard key={event.id} event={event} />)
@@ -121,18 +122,18 @@ export default function EventStyling() {
 
         {/* Add event prompt */}
         <div className="mt-8 bg-white rounded-2xl border border-dashed border-gray-200 p-6 text-center">
-          <p className="text-sm text-gray-500 mb-3">Have an event not on your calendar?</p>
+          <p className="text-sm text-gray-500 mb-3">{t('event_missing')}</p>
           <Button variant="secondary" icon={<Plus size={15} />} size="sm">
-            Add Event Manually
+            {t('event_add_manual')}
           </Button>
         </div>
 
         {/* Stats bar */}
         <div className="mt-10 grid grid-cols-3 gap-4">
           {[
-            { label: 'Outfits using your wardrobe', value: '8', sub: 'No purchase needed' },
-            { label: 'Smart purchase suggestions',  value: '3', sub: 'High-impact additions' },
-            { label: 'Estimated savings this month', value: '2,100 EGP', sub: 'vs. buying new' },
+            { label: t('stat_wardrobe_label'), value: '8', sub: t('stat_wardrobe_sub') },
+            { label: t('stat_purchase_label'),  value: '3', sub: t('stat_purchase_sub') },
+            { label: t('stat_savings_label'), value: '2,100 EGP', sub: t('stat_savings_sub') },
           ].map((s, i) => (
             <div key={i} className="bg-white rounded-xl border border-manikan-border shadow-soft p-4 text-center">
               <p className="text-2xl font-display text-forest-600">{s.value}</p>
