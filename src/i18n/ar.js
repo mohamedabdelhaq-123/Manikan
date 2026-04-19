@@ -234,6 +234,26 @@ const ar = {
   pricing_feat_sc7: 'تكاملات مخصصة ووصول API',
   pricing_feat_sc8: 'خيار الودجت بعلامة بيضاء',
   pricing_currency: 'ج.م',
+
+  // Event Styling page
+  event_label:        'تنسيق الملابس الذكي للمناسبات',
+  event_title:        'أناقة لكل مناسبة، تلقائياً.',
+  event_subtitle:     'يقرأ سمارت فيت أحداثك القادمة ويقترح أطقماً كاملة — من خزانة ملابسك أولاً، مع اقتراحات شراء ذكية عند الحاجة.',
+  event_connected_cal:'التقويمات المتصلة',
+  event_add_cal:      'إضافة تقويم',
+  event_connected:    'متصل',
+  event_connect:      'اتصال',
+  event_use_wardrobe: 'استخدام خزانة ملابسي أولاً',
+  event_wardrobe_mode:'وضع خزانة الملابس مفعل — اقتراحات الملابس تعطي الأولوية للملابس التي تملكها بالفعل.',
+  event_no_events:    'لا توجد مناسبات من هذا النوع.',
+  event_missing:      'هل لديك مناسبة غير مدرجة في التقويم؟',
+  event_add_manual:   'إضافة مناسبة يدوياً',
+  stat_wardrobe_label:'أطقم من خزانة ملابسك',
+  stat_wardrobe_sub:  'بدون حاجة للشراء',
+  stat_purchase_label:'اقتراحات شراء ذكية',
+  stat_purchase_sub:  'إضافات ذات تأثير عالي',
+  stat_savings_label: 'المدخرات المقدرة هذا الشهر',
+  stat_savings_sub:   'مقارنة بشراء ملابس جديدة',
 };
 
 export default ar;

@@ -8,23 +8,23 @@ export default function Footer() {
 
   const footerLinks = {
     [t('footer_product')]: [
-      { label: t('footer_demo'),     path: '/store' },
-      { label: t('footer_size'),     path: '/size' },
-      { label: t('footer_styling'),  path: '/events' },
+      { label: t('footer_demo'), path: '/store' },
+      { label: t('footer_size'), path: '/size' },
+      { label: t('footer_styling'), path: '/events' },
       { label: t('footer_wardrobe'), path: '/wardrobe' },
-      { label: t('footer_visual'),   path: '/visualize' },
+      { label: t('footer_visual'), path: '/visualize' },
     ],
     [t('footer_biz')]: [
-      { label: t('footer_retail'),   path: '/business' },
-      { label: t('footer_pricing'),  path: '/pricing' },
-      { label: t('footer_api'),      path: '/business' },
-      { label: t('footer_cases'),    path: '/business' },
+      { label: t('footer_retail'), path: '/business' },
+      { label: t('footer_pricing'), path: '/pricing' },
+      { label: t('footer_api'), path: '/business' },
+      { label: t('footer_cases'), path: '/business' },
     ],
     [t('footer_company')]: [
-      { label: t('footer_about'),    path: '/' },
-      { label: t('footer_blog'),     path: '/' },
-      { label: t('footer_careers'),  path: '/' },
-      { label: t('footer_contact'),  path: '/' },
+      { label: t('footer_about'), path: '/' },
+      { label: t('footer_blog'), path: '/' },
+      { label: t('footer_careers'), path: '/' },
+      { label: t('footer_contact'), path: '/' },
     ],
   };
 
@@ -38,14 +38,8 @@ export default function Footer() {
 
           {/* Brand — wordmark only */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-3 mb-5 group w-fit">
-              <div className="w-10 h-10 rounded-xl bg-forest-700 flex items-center justify-center group-hover:bg-forest-600 transition-colors">
-                <span className="font-display text-white text-xl font-bold leading-none">M</span>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="font-display text-xl font-semibold text-white tracking-wider">MANIKAN</span>
-                <span className="text-[9px] tracking-[0.22em] text-forest-400 uppercase font-medium">{t('nav_tagline')}</span>
-              </div>
+            <Link to="/" className="block mb-5 w-fit">
+              <img src="/logo.png" className="h-20 w-auto object-contain" alt="Manikan" />
             </Link>
 
             <p className="text-sm text-forest-300 leading-relaxed max-w-xs mb-6">
@@ -54,10 +48,10 @@ export default function Footer() {
 
             <div className="flex items-center gap-4">
               {[
-                { icon: Mail,      href: 'mailto:hello@manikan.io', label: 'Email' },
-                { icon: Twitter,   href: '#',                       label: 'Twitter' },
-                { icon: Linkedin,  href: '#',                       label: 'LinkedIn' },
-                { icon: Instagram, href: '#',                       label: 'Instagram' },
+                { icon: Mail, href: 'mailto:hello@manikan.io', label: 'Email' },
+                { icon: Twitter, href: '#', label: 'Twitter' },
+                { icon: Linkedin, href: '#', label: 'LinkedIn' },
+                { icon: Instagram, href: '#', label: 'Instagram' },
               ].map(({ icon: Icon, href, label }) => (
                 <a
                   key={label}
