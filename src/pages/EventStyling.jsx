@@ -5,6 +5,7 @@ import EventCard from '../components/EventCard';
 import SectionHeader from '../components/SectionHeader';
 import Badge from '../components/Badge';
 import Button from '../components/Button';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const calendarSources = [
   { id: 'google',  label: 'Google Calendar', icon: Calendar,        connected: true,  color: 'blue'  },

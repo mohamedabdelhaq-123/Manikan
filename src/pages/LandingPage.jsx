@@ -6,6 +6,7 @@ import {
   Package, RefreshCw, Frown, CheckCircle, Sparkles, Play,
 } from 'lucide-react';
 import Button from '../components/Button';
+import { useLanguage } from '../contexts/LanguageContext';
 
 // ─── Intersection Observer Hook ────────────────────────────────────────────
 function useInView(threshold = 0.15) {
@@ -145,6 +146,48 @@ function Ornament({ label }) {
 
 // ─── Component ─────────────────────────────────────────────────────────────
 export default function LandingPage() {
+  const { t } = useLanguage();
+
+  const stats = [
+    { value: 30, suffix: '%', label: t('stat_1_label') },
+    { value: 70, suffix: '%', label: t('stat_2_label') },
+    { value: 42, suffix: '%', label: t('stat_3_label') },
+  ];
+
+  const features = [
+    { icon: Ruler,      title: t('feat_1_title'), desc: t('feat_1_desc'), delay: 'stagger-1' },
+    { icon: CalendarCheck, title: t('feat_2_title'), desc: t('feat_2_desc'), delay: 'stagger-2' },
+    { icon: Shirt,      title: t('feat_3_title'), desc: t('feat_3_desc'), delay: 'stagger-3' },
+    { icon: BarChart3,  title: t('feat_4_title'), desc: t('feat_4_desc'), delay: 'stagger-4' },
+  ];
+
+  const benefits = [
+    { icon: TrendingDown, label: t('ben_1'), audience: t('for_brands') },
+    { icon: ShieldCheck,  label: t('ben_2'), audience: t('for_brands') },
+    { icon: Zap,          label: t('ben_3'), audience: t('for_brands') },
+    { icon: Users,        label: t('ben_4'), audience: t('for_shoppers') },
+    { icon: Shirt,        label: t('ben_5'), audience: t('for_shoppers') },
+    { icon: Star,         label: t('ben_6'), audience: t('for_shoppers') },
+  ];
+
+  const steps = [
+    { num: '01', title: t('step_1_title'), desc: t('step_1_desc'), icon: Package },
+    { num: '02', title: t('step_2_title'), desc: t('step_2_desc'), icon: Ruler },
+    { num: '03', title: t('step_3_title'), desc: t('step_3_desc'), icon: Zap },
+    { num: '04', title: t('step_4_title'), desc: t('step_4_desc'), icon: Sparkles },
+  ];
+
+  const problems = [
+    { icon: RefreshCw, title: t('prob_1_title'), desc: t('prob_1_desc') },
+    { icon: Frown,     title: t('prob_2_title'), desc: t('prob_2_desc') },
+    { icon: Package,   title: t('prob_3_title'), desc: t('prob_3_desc') },
+  ];
+
+  const testimonials = [
+    { quote: t('test_1_quote'), name: t('test_1_name'), role: t('test_1_role'), avatar: 'DM', rating: 5 },
+    { quote: t('test_2_quote'), name: t('test_2_name'), role: t('test_2_role'), avatar: 'YA', rating: 5 },
+  ];
+
   return (
     <div className="overflow-x-hidden bg-manikan-bg">
 
@@ -168,18 +211,17 @@ export default function LandingPage() {
               {/* Badge */}
               <div className="inline-flex items-center gap-2.5 bg-white border border-manikan-border rounded-full px-4 py-2 mb-8 shadow-soft">
                 <span className="w-2 h-2 bg-gold-400 rounded-full animate-pulse-gold" />
-                <span className="text-xs font-semibold text-gold-600 tracking-wide">AI-Powered Fashion Tech · Investor Demo</span>
+                <span className="text-xs font-semibold text-gold-600 tracking-wide">{t('hero_badge')}</span>
               </div>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-medium text-forest-900 leading-[1.06] text-balance mb-6">
-                Dress Smarter.<br />
-                <span className="shimmer-text">Fit Better.</span><br />
-                Shop Confidently.
+                {t('hero_line1')}<br />
+                <span className="shimmer-text">{t('hero_line2')}</span><br />
+                {t('hero_line3')}
               </h1>
 
               <p className="text-base text-gray-500 leading-relaxed mb-10 max-w-lg">
-                Manikan helps fashion brands of all kinds cut return rates and recommend the right size
-                every time — for men, women, and everyone in between — all with one embeddable AI platform.
+                {t('hero_sub')}
               </p>
 
               <div className="flex flex-wrap gap-3 mb-10">
@@ -188,23 +230,23 @@ export default function LandingPage() {
                   className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-forest-600 text-white text-sm font-medium rounded-xl hover:bg-forest-700 transition-all duration-300 shadow-card hover:shadow-lift btn-glow group"
                 >
                   <Zap size={17} />
-                  Try the Demo
+                  {t('hero_cta_demo')}
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/business"
                   className="inline-flex items-center gap-2 px-7 py-3.5 border border-manikan-border text-forest-700 text-sm font-medium rounded-xl hover:border-forest-300 hover:bg-forest-50 transition-all duration-300"
                 >
-                  For Businesses
+                  {t('hero_cta_biz')}
                   <ChevronRight size={16} />
                 </Link>
               </div>
 
               {/* Trust indicators */}
               <div className="flex flex-wrap gap-5 text-xs text-gray-400">
-                {['Free to try', 'No credit card needed', 'Works with any platform'].map((t) => (
-                  <span key={t} className="flex items-center gap-1.5">
-                    <CheckCircle size={12} className="text-forest-400" /> {t}
+                {[t('hero_free'), t('hero_no_card'), t('hero_any_plat')].map((item) => (
+                  <span key={item} className="flex items-center gap-1.5">
+                    <CheckCircle size={12} className="text-forest-400" /> {item}
                   </span>
                 ))}
               </div>
@@ -266,13 +308,12 @@ export default function LandingPage() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 section-pattern">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-14">
-            <Ornament label="The Problem" />
+            <Ornament label={t('problem_label')} />
             <h2 className="text-4xl sm:text-5xl font-display text-forest-900 leading-tight mb-4">
-              Fashion has a fit crisis.
+              {t('problem_title')}
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
-              Returns are expensive, size guessing is frustrating, and wardrobes overflow with clothes
-              nobody wears. It costs brands and shoppers alike.
+              {t('problem_sub')}
             </p>
           </AnimatedSection>
 
@@ -304,15 +345,14 @@ export default function LandingPage() {
           <AnimatedSection className="text-center mb-14">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="h-px w-10 bg-gold-400/60" />
-              <span className="text-xs font-semibold text-gold-400 uppercase tracking-[0.2em]">The Solution</span>
+              <span className="text-xs font-semibold text-gold-400 uppercase tracking-[0.2em]">{t('solution_label')}</span>
               <div className="h-px w-10 bg-gold-400/60" />
             </div>
             <h2 className="text-4xl sm:text-5xl font-display text-white leading-tight mb-4">
-              One platform. Every fit,<br />every occasion.
+              {t('solution_title')}
             </h2>
             <p className="text-forest-200 max-w-2xl mx-auto leading-relaxed">
-              Manikan integrates into any fashion brand's product page to guide shoppers from browse
-              to the perfect outfit — with AI that understands their body, calendar, and wardrobe.
+              {t('solution_sub')}
             </p>
           </AnimatedSection>
 
@@ -337,13 +377,12 @@ export default function LandingPage() {
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-14">
-            <Ornament label="How It Works" />
+            <Ornament label={t('how_label')} />
             <h2 className="text-4xl sm:text-5xl font-display text-forest-900 leading-tight mb-4">
-              Up and running in minutes.
+              {t('how_title')}
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
-              For retailers, integration is a single embed. For shoppers, it's a 20-second setup
-              that unlocks a personalized fashion experience.
+              {t('how_sub')}
             </p>
           </AnimatedSection>
 
@@ -383,11 +422,11 @@ export default function LandingPage() {
           <AnimatedSection className="text-center mb-14">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="h-px w-10 bg-gold-400/60" />
-              <span className="text-xs font-semibold text-gold-300 uppercase tracking-[0.2em]">Benefits</span>
+              <span className="text-xs font-semibold text-gold-300 uppercase tracking-[0.2em]">{t('benefits_label')}</span>
               <div className="h-px w-10 bg-gold-400/60" />
             </div>
             <h2 className="text-4xl sm:text-5xl font-display text-white leading-tight">
-              Built for brands. Loved by shoppers.
+              {t('benefits_title')}
             </h2>
           </AnimatedSection>
 
@@ -413,9 +452,9 @@ export default function LandingPage() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 section-pattern">
         <div className="max-w-7xl mx-auto">
           <AnimatedSection className="text-center mb-14">
-            <Ornament label="Early Results" />
+            <Ornament label={t('testimonials_label')} />
             <h2 className="text-4xl sm:text-5xl font-display text-forest-900 leading-tight mb-4">
-              Brands are already seeing impact.
+              {t('testimonials_title')}
             </h2>
           </AnimatedSection>
 
@@ -466,11 +505,10 @@ export default function LandingPage() {
               </div>
 
               <h2 className="text-4xl sm:text-5xl font-display text-forest-900 mb-4 leading-tight">
-                Ready to see it in action?
+                {t('cta_title')}
               </h2>
               <p className="text-gray-500 mb-10 max-w-md mx-auto text-sm leading-relaxed">
-                Explore the demo store, try the size recommender, or learn how to integrate Manikan
-                into your brand's experience.
+                {t('cta_sub')}
               </p>
 
               <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -478,21 +516,21 @@ export default function LandingPage() {
                   to="/store"
                   className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-forest-600 text-white text-sm font-medium rounded-xl hover:bg-forest-700 transition-all shadow-card hover:shadow-lift btn-glow group"
                 >
-                  Browse Demo Store
+                  {t('cta_store')}
                   <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/pricing"
                   className="inline-flex items-center gap-2 px-8 py-3.5 border border-manikan-border text-forest-700 text-sm font-medium rounded-xl hover:border-forest-300 hover:bg-forest-50 transition-all"
                 >
-                  View Pricing
+                  {t('cta_pricing')}
                 </Link>
               </div>
 
               <div className="flex flex-wrap justify-center gap-6 text-xs text-gray-400">
-                {['Free to try', 'No credit card', 'Works with any platform'].map((t) => (
-                  <span key={t} className="flex items-center gap-1.5">
-                    <CheckCircle size={12} className="text-forest-400" /> {t}
+                {[t('cta_free'), t('cta_no_card'), t('cta_works')].map((item) => (
+                  <span key={item} className="flex items-center gap-1.5">
+                    <CheckCircle size={12} className="text-forest-400" /> {item}
                   </span>
                 ))}
               </div>

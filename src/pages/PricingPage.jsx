@@ -3,103 +3,108 @@ import { Check, HelpCircle, Zap, ArrowRight, Star } from 'lucide-react';
 import SectionHeader from '../components/SectionHeader';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
-
-const plans = [
-  {
-    name: 'Starter',
-    price: 'Free',
-    period: null,
-    description: 'Try Manikan for up to 30 days. Full features, no card needed.',
-    cta: 'Start Free Trial',
-    icon: '🌱',
-    features: [
-      'Up to 500 size recommendations / month',
-      'Size Finder widget (1 storefront)',
-      'Basic fit analytics dashboard',
-      'Email support',
-      'Works with Shopify & WooCommerce',
-    ],
-  },
-  {
-    name: 'Growth',
-    price: '799',
-    period: 'month',
-    description: 'For growing brands with serious return reduction goals.',
-    cta: 'Start Free Trial',
-    icon: '🚀',
-    features: [
-      'Up to 10,000 recommendations / month',
-      'Multi-storefront widget (up to 3)',
-      'Event-based styling suggestions',
-      'Wardrobe integration module',
-      'Full analytics & return driver reports',
-      'Priority support + onboarding call',
-      'Shopify, WooCommerce, Salla, Zid',
-    ],
-  },
-  {
-    name: 'Scale',
-    price: '2,499',
-    period: 'month',
-    description: 'For established brands needing enterprise-grade performance.',
-    cta: 'Contact Sales',
-    icon: '🏆',
-    features: [
-      'Unlimited recommendations',
-      'Unlimited storefronts',
-      'Custom AI model per brand sizing',
-      'Advanced visualisation (try-on)',
-      'Dedicated account manager',
-      'SLA-backed uptime (99.9%)',
-      'Custom integrations & API access',
-      'White-label widget option',
-    ],
-  },
-];
-
-const payPerUse = [
-  { action: 'Size Recommendation', price: '0.15 EGP', unit: 'per request' },
-  { action: 'Event Styling Query', price: '0.30 EGP', unit: 'per query' },
-  { action: 'AI Visualisation',    price: '1.50 EGP', unit: 'per session' },
-  { action: 'API Call (general)',  price: '0.05 EGP', unit: 'per call' },
-];
-
-const faqs = [
-  {
-    q: 'Is there a free trial?',
-    a: 'Yes — the Starter plan is completely free for 30 days with full access to all features. No credit card required.',
-  },
-  {
-    q: 'Can I switch between plans?',
-    a: 'Absolutely. You can upgrade, downgrade, or switch to pay-per-use at any time from your dashboard.',
-  },
-  {
-    q: 'What platforms does the widget support?',
-    a: 'Manikan works with Shopify, WooCommerce, Salla, Zid, Magento, and any custom storefront via our JavaScript SDK.',
-  },
-  {
-    q: 'Is our customer data safe?',
-    a: 'Yes. Measurement data is encrypted and never shared. Photos used for visualisation are never stored. We are GDPR and PDPA compliant.',
-  },
-  {
-    q: 'Do you offer custom pricing for large brands?',
-    a: 'Yes. Contact our sales team for volume pricing, white-label options, and enterprise SLAs.',
-  },
-];
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function PricingPage() {
   const [billing, setBilling] = useState('monthly');
   const [openFaq, setOpenFaq] = useState(null);
+  const { t } = useLanguage();
+
+  const plans = [
+    {
+      nameKey: 'plan_starter',
+      price: 'Free',
+      period: null,
+      descKey: 'plan_starter_desc',
+      ctaKey: 'pricing_start',
+      icon: '🌱',
+      features: [
+        t('pricing_feat_s1') || 'Up to 500 size recommendations / month',
+        t('pricing_feat_s2') || 'Size Finder widget (1 storefront)',
+        t('pricing_feat_s3') || 'Basic fit analytics dashboard',
+        t('pricing_feat_s4') || 'Email support',
+        t('pricing_feat_s5') || 'Works with Shopify & WooCommerce',
+      ],
+    },
+    {
+      nameKey: 'plan_growth',
+      price: '799',
+      period: 'month',
+      descKey: 'plan_growth_desc',
+      ctaKey: 'pricing_start',
+      icon: '🚀',
+      features: [
+        t('pricing_feat_g1') || 'Up to 10,000 recommendations / month',
+        t('pricing_feat_g2') || 'Multi-storefront widget (up to 3)',
+        t('pricing_feat_g3') || 'Event-based styling suggestions',
+        t('pricing_feat_g4') || 'Wardrobe integration module',
+        t('pricing_feat_g5') || 'Full analytics & return driver reports',
+        t('pricing_feat_g6') || 'Priority support + onboarding call',
+        t('pricing_feat_g7') || 'Shopify, WooCommerce, Salla, Zid',
+      ],
+    },
+    {
+      nameKey: 'plan_scale',
+      price: '2,499',
+      period: 'month',
+      descKey: 'plan_scale_desc',
+      ctaKey: 'pricing_contact',
+      icon: '🏆',
+      features: [
+        t('pricing_feat_sc1') || 'Unlimited recommendations',
+        t('pricing_feat_sc2') || 'Unlimited storefronts',
+        t('pricing_feat_sc3') || 'Custom AI model per brand sizing',
+        t('pricing_feat_sc4') || 'Advanced visualisation (try-on)',
+        t('pricing_feat_sc5') || 'Dedicated account manager',
+        t('pricing_feat_sc6') || 'SLA-backed uptime (99.9%)',
+        t('pricing_feat_sc7') || 'Custom integrations & API access',
+        t('pricing_feat_sc8') || 'White-label widget option',
+      ],
+    },
+  ];
+
+  const payPerUse = [
+    { action: 'Size Recommendation', price: `0.15 ${t('currency')}`, unit: 'per request' },
+    { action: 'Event Styling Query',  price: `0.30 ${t('currency')}`, unit: 'per query' },
+    { action: 'AI Visualisation',    price: `1.50 ${t('currency')}`, unit: 'per session' },
+    { action: 'API Call (general)',  price: `0.05 ${t('currency')}`, unit: 'per call' },
+  ];
+
+  const faqs = [
+    {
+      q: 'Is there a free trial?',
+      a: 'Yes — the Starter plan is completely free for 30 days with full access to all features. No credit card required.',
+    },
+    {
+      q: 'Can I switch between plans?',
+      a: 'Absolutely. You can upgrade, downgrade, or switch to pay-per-use at any time from your dashboard.',
+    },
+    {
+      q: 'What platforms does the widget support?',
+      a: 'Manikan works with Shopify, WooCommerce, Salla, Zid, Magento, and any custom storefront via our JavaScript SDK.',
+    },
+    {
+      q: 'Is our customer data safe?',
+      a: 'Yes. Measurement data is encrypted and never shared. Photos used for visualisation are never stored. We are GDPR and PDPA compliant.',
+    },
+    {
+      q: 'Do you offer custom pricing for large brands?',
+      a: 'Yes. Contact our sales team for volume pricing, white-label options, and enterprise SLAs.',
+    },
+  ];
+
+  const currency = t('pricing_currency');
 
   return (
     <div className="pt-24 min-h-screen bg-manikan-bg">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
         {/* Header */}
         <div className="text-center mb-14">
           <SectionHeader
-            label="Pricing"
-            title="Simple, honest pricing."
-            subtitle="Start free, scale as you grow. No hidden fees — just clear value for your brand."
+            label={t('nav_pricing')}
+            title={t('pricing_title')}
+            subtitle={t('pricing_sub')}
             center
           />
 
@@ -114,7 +119,7 @@ export default function PricingPage() {
             </button>
             <span className={`text-sm font-medium transition-colors ${billing === 'annual' ? 'text-forest-800' : 'text-gray-400'}`}>
               Annual
-              <Badge color="gold" className="ml-2 align-middle">Save 20%</Badge>
+              <Badge color="gold" className="ms-2 align-middle">Save 20%</Badge>
             </span>
           </div>
         </div>
@@ -123,13 +128,14 @@ export default function PricingPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-16 items-start">
           {plans.map((plan, i) => {
             const isHighlight = i === 1;
+            const rawPrice = plan.price === 'Free' ? plan.price : plan.price;
             const displayPrice = billing === 'annual' && plan.price !== 'Free'
               ? Math.round(parseInt(plan.price.replace(',', '')) * 0.8).toLocaleString()
               : plan.price;
 
             return (
               <div
-                key={plan.name}
+                key={plan.nameKey}
                 className={`relative rounded-2xl p-7 flex flex-col transition-all duration-300 ${
                   isHighlight
                     ? 'bg-forest-800 text-white shadow-lift md:scale-[1.04] animate-glow-pulse'
@@ -143,8 +149,8 @@ export default function PricingPage() {
 
                 {isHighlight && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span className="bg-gold-500 text-white text-xs font-semibold px-4 py-1 rounded-full shadow-gold flex items-center gap-1">
-                      <Star size={10} fill="white" /> Most Popular
+                    <span className="bg-gold-400 text-forest-900 text-xs font-semibold px-4 py-1 rounded-full shadow-gold flex items-center gap-1">
+                      <Star size={10} fill="currentColor" /> {t('pricing_popular')}
                     </span>
                   </div>
                 )}
@@ -152,18 +158,20 @@ export default function PricingPage() {
                 <div className="mb-6">
                   <div className="flex items-center gap-2 mb-3">
                     <span className="text-xl">{plan.icon}</span>
-                    <p className={`text-sm font-semibold tracking-wide ${isHighlight ? 'text-gold-300' : 'text-forest-600'}`}>{plan.name}</p>
+                    <p className={`text-sm font-semibold tracking-wide ${isHighlight ? 'text-gold-300' : 'text-forest-600'}`}>{t(plan.nameKey)}</p>
                   </div>
                   <div className="flex items-end gap-1.5 mb-2">
                     {plan.price !== 'Free' && (
-                      <span className={`text-sm ${isHighlight ? 'text-forest-300' : 'text-gray-400'}`}>EGP</span>
+                      <span className={`text-sm ${isHighlight ? 'text-forest-300' : 'text-gray-400'}`}>{currency}</span>
                     )}
-                    <span className={`text-4xl font-display ${isHighlight ? 'text-white' : 'text-forest-900'}`}>{displayPrice}</span>
+                    <span className={`text-4xl font-display ${isHighlight ? 'text-white' : 'text-forest-900'}`}>
+                      {plan.price === 'Free' ? t('pricing_free') : displayPrice}
+                    </span>
                     {plan.period && (
-                      <span className={`text-sm mb-1 ${isHighlight ? 'text-forest-300' : 'text-gray-400'}`}>/ {plan.period}</span>
+                      <span className={`text-sm mb-1 ${isHighlight ? 'text-forest-300' : 'text-gray-400'}`}>{t('pricing_month')}</span>
                     )}
                   </div>
-                  <p className={`text-sm leading-relaxed ${isHighlight ? 'text-forest-200' : 'text-gray-500'}`}>{plan.description}</p>
+                  <p className={`text-sm leading-relaxed ${isHighlight ? 'text-forest-200' : 'text-gray-500'}`}>{t(plan.descKey)}</p>
                 </div>
 
                 <ul className="space-y-2.5 mb-7 flex-1">
@@ -181,7 +189,7 @@ export default function PricingPage() {
                   fullWidth
                   size="md"
                 >
-                  {plan.cta}
+                  {t(plan.ctaKey)}
                 </Button>
               </div>
             );
@@ -191,12 +199,10 @@ export default function PricingPage() {
         {/* Pay per use */}
         <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-7 mb-16">
           <div className="flex items-center gap-3 mb-5">
-            <h2 className="font-display text-2xl text-forest-900">Pay-per-use model</h2>
+            <h2 className="font-display text-2xl text-forest-900">{t('pricing_ppu_title')}</h2>
             <Badge color="gold">Flexible</Badge>
           </div>
-          <p className="text-sm text-gray-500 mb-6">
-            Not ready for a monthly plan? Use Manikan on a per-request basis — perfect for low-volume stores or seasonal campaigns.
-          </p>
+          <p className="text-sm text-gray-500 mb-6">{t('pricing_ppu_sub')}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {payPerUse.map((item, i) => (
               <div key={i} className="bg-manikan-muted rounded-xl border border-manikan-border p-5 card-hover">
@@ -206,29 +212,17 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-400 mt-4">Billed at end of each calendar month. Minimum charge: 50 EGP.</p>
-        </div>
-
-        {/* Comparison callout */}
-        <div className="bg-forest-50 border border-forest-100 rounded-2xl p-7 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-16">
-          <div>
-            <h3 className="font-display text-xl text-forest-800 mb-1">Need to compare plans in detail?</h3>
-            <p className="text-sm text-forest-600">See the full feature matrix or book a 20-minute call with our team.</p>
-          </div>
-          <div className="flex gap-3 shrink-0">
-            <Button variant="outline" size="sm">Full Comparison</Button>
-            <Button size="sm" iconRight={<ArrowRight size={13} />}>Book a Demo</Button>
-          </div>
+          <p className="text-xs text-gray-400 mt-4">Billed at end of each calendar month. Minimum charge: 50 {currency}.</p>
         </div>
 
         {/* FAQ */}
-        <SectionHeader label="FAQ" title="Common questions." center />
+        <SectionHeader label="FAQ" title={t('pricing_faq_title')} center />
         <div className="max-w-2xl mx-auto space-y-3">
           {faqs.map((faq, i) => (
             <div key={i} className="bg-white rounded-xl border border-manikan-border shadow-soft overflow-hidden">
               <button
                 onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                className="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-forest-50 transition-colors"
+                className="w-full flex items-center justify-between px-5 py-4 text-start hover:bg-forest-50 transition-colors"
               >
                 <span className="text-sm font-medium text-forest-900 flex items-center gap-2">
                   <HelpCircle size={14} className="text-gold-400 shrink-0" />
@@ -238,7 +232,7 @@ export default function PricingPage() {
               </button>
               {openFaq === i && (
                 <div className="px-5 pb-5 animate-fade-in border-t border-manikan-border">
-                  <p className="text-sm text-gray-500 leading-relaxed pt-4 pl-[22px]">{faq.a}</p>
+                  <p className="text-sm text-gray-500 leading-relaxed pt-4 ps-[22px]">{faq.a}</p>
                 </div>
               )}
             </div>
@@ -248,15 +242,16 @@ export default function PricingPage() {
         {/* Bottom CTA */}
         <div className="mt-16 text-center">
           <div className="bg-white rounded-2xl border border-manikan-border shadow-card p-10 max-w-xl mx-auto relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-forest-500 via-forest-300 to-forest-500" />
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
             <div className="w-14 h-14 rounded-xl bg-forest-700 flex items-center justify-center mx-auto mb-5 shadow-soft">
               <span className="font-display text-white text-2xl font-bold leading-none">M</span>
             </div>
-            <h2 className="font-display text-3xl text-forest-900 mb-2">Get started today.</h2>
-            <p className="text-sm text-gray-500 mb-7">Free for 30 days. No card. Cancel anytime.</p>
-            <Button to="/business" size="lg" fullWidth>Start Free Trial</Button>
+            <h2 className="font-display text-3xl text-forest-900 mb-2">{t('pricing_cta_title')}</h2>
+            <p className="text-sm text-gray-500 mb-7">{t('pricing_cta_sub')}</p>
+            <Button to="/business" size="lg" fullWidth>{t('pricing_cta_btn')}</Button>
           </div>
         </div>
+
       </div>
     </div>
   );

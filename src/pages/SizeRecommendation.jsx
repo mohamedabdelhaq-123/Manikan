@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import SectionHeader from '../components/SectionHeader';
 import ConfidenceBar from '../components/ConfidenceBar';
 import Badge from '../components/Badge';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const fitOptions = [
   { value: 'slim',    label: 'Slim',    desc: 'Fitted, close to body' },
@@ -91,9 +92,21 @@ const menSizeGuide = [
 ];
 
 export default function SizeRecommendation() {
+  const { t } = useLanguage();
   const [form, setForm]     = useState({ height: '', weight: '', fit: 'regular', gender: 'women' });
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const fitOptions = [
+    { value: 'slim',    label: t('size_slim'),    desc: t('size_slim_desc') },
+    { value: 'regular', label: t('size_regular'), desc: t('size_reg_desc') },
+    { value: 'relaxed', label: t('size_relaxed'), desc: t('size_rel_desc') },
+  ];
+
+  const genderOptions = [
+    { value: 'women', label: t('size_women'), emoji: '👗' },
+    { value: 'men',   label: t('size_men'),   emoji: '👔' },
+  ];
 
   const handleChange = (field, value) => setForm((f) => ({ ...f, [field]: value }));
 
@@ -113,9 +126,9 @@ export default function SizeRecommendation() {
     <div className="pt-24 min-h-screen bg-manikan-bg">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <SectionHeader
-          label="AI Size Finder"
-          title="Your perfect fit, calculated."
-          subtitle="Enter your measurements once. We'll recommend your size across all brands in the store — with a confidence score to back it up."
+          label={t('size_label')}
+          title={t('size_title')}
+          subtitle={t('size_sub')}
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -125,12 +138,12 @@ export default function SizeRecommendation() {
               <div className="w-9 h-9 bg-forest-50 rounded-xl flex items-center justify-center border border-forest-100">
                 <Ruler size={18} className="text-forest-600" />
               </div>
-              Your Measurements
+              {t('size_label')}
             </h3>
 
             {/* Gender selector */}
             <div className="mb-5">
-              <label className="block text-sm font-medium text-forest-800 mb-2">I am shopping for</label>
+              <label className="block text-sm font-medium text-forest-800 mb-2">{t('size_gender_label')}</label>
               <div className="grid grid-cols-2 gap-2">
                 {genderOptions.map((opt) => (
                   <button
@@ -151,7 +164,7 @@ export default function SizeRecommendation() {
 
             {/* Height */}
             <div className="mb-5">
-              <label className="block text-sm font-medium text-forest-800 mb-2">Height (cm)</label>
+              <label className="block text-sm font-medium text-forest-800 mb-2">{t('size_height')}</label>
               <input
                 type="number"
                 value={form.height}
@@ -162,13 +175,13 @@ export default function SizeRecommendation() {
                 className="w-full px-4 py-3 border border-manikan-border rounded-xl text-sm focus:outline-none focus:border-forest-400 focus:ring-1 focus:ring-forest-100 transition bg-manikan-muted text-forest-900 placeholder:text-gray-400"
               />
               {form.height && (parseFloat(form.height) < 140 || parseFloat(form.height) > 210) && (
-                <p className="text-xs text-red-400 mt-1">Enter a valid height (140–210 cm)</p>
+                <p className="text-xs text-red-400 mt-1">{t('size_err_height')}</p>
               )}
             </div>
 
             {/* Weight */}
             <div className="mb-5">
-              <label className="block text-sm font-medium text-forest-800 mb-2">Weight (kg)</label>
+              <label className="block text-sm font-medium text-forest-800 mb-2">{t('size_weight')}</label>
               <input
                 type="number"
                 value={form.weight}
@@ -182,7 +195,7 @@ export default function SizeRecommendation() {
 
             {/* Fit Preference */}
             <div className="mb-7">
-              <label className="block text-sm font-medium text-forest-800 mb-2">Fit Preference</label>
+              <label className="block text-sm font-medium text-forest-800 mb-2">{t('size_fit_label')}</label>
               <div className="grid grid-cols-3 gap-2">
                 {fitOptions.map((opt) => (
                   <button
@@ -213,14 +226,14 @@ export default function SizeRecommendation() {
               {loading ? (
                 <span className="flex items-center gap-2">
                   <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  Analysing your measurements...
+                  {t('size_loading')}
                 </span>
-              ) : 'Get My Size Recommendation'}
+              ) : t('size_cta')}
             </Button>
 
             {result && (
               <button onClick={reset} className="mt-3 w-full text-sm text-gray-400 hover:text-forest-600 flex items-center justify-center gap-1.5 transition-colors">
-                <RotateCcw size={13} /> Start over
+                <RotateCcw size={13} /> {t('size_start_over')}
               </button>
             )}
           </div>
@@ -232,9 +245,9 @@ export default function SizeRecommendation() {
                 <div className="w-16 h-16 bg-forest-50 rounded-2xl flex items-center justify-center mb-5 border border-forest-100">
                   <Ruler size={26} className="text-forest-400" />
                 </div>
-                <p className="font-display text-lg text-forest-800 mb-2">Awaiting your measurements</p>
+                <p className="font-display text-lg text-forest-800 mb-2">{t('size_awaiting')}</p>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  Fill in your height, weight and fit preference to get your AI recommendation.
+                  {t('size_fill')}
                 </p>
               </div>
             )}
@@ -244,8 +257,8 @@ export default function SizeRecommendation() {
                 <div className="w-16 h-16 bg-forest-50 rounded-2xl flex items-center justify-center mb-5 animate-bounce-gentle border border-forest-100">
                   <Zap size={26} className="text-forest-500" />
                 </div>
-                <p className="font-display text-lg text-forest-800 mb-2">Analysing your body profile...</p>
-                <p className="text-sm text-gray-500 mb-4">Our AI is calculating your perfect fit</p>
+                <p className="font-display text-lg text-forest-800 mb-2">{t('size_analysing')}</p>
+                <p className="text-sm text-gray-500 mb-4">{t('size_ai_calc')}</p>
                 <div className="flex gap-1.5">
                   {[0, 1, 2].map((i) => (
                     <div key={i} className="w-2 h-2 bg-forest-400 rounded-full animate-bounce" style={{ animationDelay: `${i * 0.15}s` }} />
@@ -260,37 +273,37 @@ export default function SizeRecommendation() {
                 <div className="h-1 -mx-7 -mt-7 mb-5 rounded-t-2xl bg-gradient-to-r from-forest-400 via-gold-400 to-forest-400" />
 
                 <div className="flex items-center justify-between mb-5">
-                  <h3 className="font-display text-xl text-forest-900">Your Recommendation</h3>
-                  <Badge color="forest" dot>AI Result</Badge>
+                  <h3 className="font-display text-xl text-forest-900">{t('size_result')}</h3>
+                  <Badge color="forest" dot>{t('size_ai_result')}</Badge>
                 </div>
 
                 {/* Size boxes */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {[
-                    { label: 'Tops / Shirts', size: result.top },
-                    { label: 'Bottoms / Trousers', size: result.bottom },
+                    { label: t('size_tops'),    size: result.top },
+                    { label: t('size_bottoms'), size: result.bottom },
                   ].map((item) => (
                     <div key={item.label} className="bg-forest-50 border border-forest-100 rounded-xl p-4 text-center">
                       <p className="text-xs text-forest-600 font-medium mb-1">{item.label}</p>
                       <p className="text-5xl font-display text-forest-700">{item.size}</p>
-                      <Badge color="forest" className="mt-2">{result.fit} fit</Badge>
+                      <Badge color="forest" className="mt-2">{result.fit} {t('size_fit_badge')}</Badge>
                     </div>
                   ))}
                 </div>
 
                 {/* Confidence */}
                 <div className="mb-5 space-y-2">
-                  <ConfidenceBar value={result.confidence} label="Confidence Level" color="sage" />
+                  <ConfidenceBar value={result.confidence} label={t('size_confidence')} color="sage" />
                   <p className="text-xs text-gray-400 flex items-start gap-1">
                     <Info size={11} className="mt-0.5 shrink-0" />
-                    Based on your body measurements and fit preference. Results may vary slightly by brand.
+                    {t('size_note')}
                   </p>
                 </div>
 
                 {/* Height label */}
                 <div className="flex items-center gap-2 mb-5">
-                  <Badge color="blue">{result.heightLabel} height</Badge>
-                  <span className="text-xs text-gray-400">detected from {form.height} cm</span>
+                  <Badge color="blue">{result.heightLabel} {t('size_height_val')}</Badge>
+                  <span className="text-xs text-gray-400">{t('size_height_det')} {form.height} {t('size_height_cm')}</span>
                 </div>
 
                 {/* Tips */}
@@ -304,7 +317,7 @@ export default function SizeRecommendation() {
                 </div>
 
                 <Button to="/store" variant="outline" fullWidth>
-                  Shop with My Size →
+                  {t('size_shop_size')}
                 </Button>
               </div>
             )}
@@ -315,7 +328,7 @@ export default function SizeRecommendation() {
         <div className="mt-10 bg-white rounded-2xl border border-manikan-border shadow-soft p-6 animate-fade-up">
           <div className="flex items-center gap-3 mb-5">
             <h3 className="font-display text-lg text-forest-900">
-              {form.gender === 'men' ? "Men's" : "Women's"} Size Reference Guide (cm)
+              {form.gender === 'men' ? t('size_guide_men') : t('size_guide_women')}
             </h3>
             <span className="text-xl">{form.gender === 'men' ? '👔' : '👗'}</span>
           </div>
@@ -323,11 +336,11 @@ export default function SizeRecommendation() {
             {form.gender === 'women' ? (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-left border-b border-manikan-border">
-                    <th className="pb-3 text-xs font-semibold text-gray-500 pr-6">Size</th>
-                    <th className="pb-3 text-xs font-semibold text-gray-500 pr-6">Chest</th>
-                    <th className="pb-3 text-xs font-semibold text-gray-500 pr-6">Waist</th>
-                    <th className="pb-3 text-xs font-semibold text-gray-500">Hip</th>
+                  <tr className="text-start border-b border-manikan-border">
+                    <th className="pb-3 text-xs font-semibold text-gray-500 pe-6">{t('size_guide_size')}</th>
+                    <th className="pb-3 text-xs font-semibold text-gray-500 pe-6">{t('size_guide_chest')}</th>
+                    <th className="pb-3 text-xs font-semibold text-gray-500 pe-6">{t('size_guide_waist')}</th>
+                    <th className="pb-3 text-xs font-semibold text-gray-500">{t('size_guide_hip')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -337,7 +350,7 @@ export default function SizeRecommendation() {
                         <span className={`font-semibold ${result && result.top === row.size ? 'text-forest-600' : 'text-gray-700'}`}>
                           {row.size}
                           {result && result.top === row.size && (
-                            <span className="ml-2 text-xs text-gold-500 font-medium">← Your size</span>
+                            <span className="ms-2 text-xs text-gold-500 font-medium">{t('size_your_size')}</span>
                           )}
                         </span>
                       </td>
@@ -351,11 +364,11 @@ export default function SizeRecommendation() {
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="text-left border-b border-manikan-border">
-                    <th className="pb-3 text-xs font-semibold text-gray-500 pr-6">Size</th>
-                    <th className="pb-3 text-xs font-semibold text-gray-500 pr-6">Chest</th>
-                    <th className="pb-3 text-xs font-semibold text-gray-500 pr-6">Waist</th>
-                    <th className="pb-3 text-xs font-semibold text-gray-500">Shoulder</th>
+                  <tr className="text-start border-b border-manikan-border">
+                    <th className="pb-3 text-xs font-semibold text-gray-500 pe-6">{t('size_guide_size')}</th>
+                    <th className="pb-3 text-xs font-semibold text-gray-500 pe-6">{t('size_guide_chest')}</th>
+                    <th className="pb-3 text-xs font-semibold text-gray-500 pe-6">{t('size_guide_waist')}</th>
+                    <th className="pb-3 text-xs font-semibold text-gray-500">{t('size_guide_shldr')}</th>
                   </tr>
                 </thead>
                 <tbody>

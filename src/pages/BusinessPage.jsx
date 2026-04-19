@@ -4,6 +4,7 @@ import Button from '../components/Button';
 import SectionHeader from '../components/SectionHeader';
 import Badge from '../components/Badge';
 import ConfidenceBar from '../components/ConfidenceBar';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const widgetSnippet = `<!-- Manikan Widget — Add to your product page -->
 <script src="https://cdn.manikan.io/widget.js"
@@ -94,6 +95,7 @@ const metrics = [
 const integrations = ['Shopify', 'WooCommerce', 'Salla', 'Zid', 'Magento', 'Custom API'];
 
 export default function BusinessPage() {
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('widget');
   const [copied, setCopied]       = useState(false);
 
@@ -108,18 +110,18 @@ export default function BusinessPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Hero */}
         <div className="text-center mb-16">
-          <Badge color="blue" className="mb-4">For Retailers & Brands</Badge>
+          <Badge color="blue" className="mb-4">{t('nav_for_biz')}</Badge>
           <h1 className="text-4xl sm:text-5xl text-forest-900 mb-4">
-            Reduce returns.<br />
-            <span className="text-forest-600">Grow with confidence.</span>
+            {t('ben_1').split('up')[0]}<br />
+            <span className="text-forest-600">{t('pricing_cta_sub')}</span>
           </h1>
           <p className="text-gray-500 max-w-xl mx-auto leading-relaxed mb-8">
             Manikan is a plug-and-play sizing and styling platform built for local and mid-tier fashion brands. No ML team required. Results in days, not months.
           </p>
           <div className="flex justify-center gap-3 flex-wrap">
-            <Button to="/pricing" size="lg" icon={<Zap size={16} />}>Start Free Trial</Button>
+            <Button to="/pricing" size="lg" icon={<Zap size={16} />}>{t('pricing_start')}</Button>
             <Button variant="secondary" size="lg" iconRight={<ArrowRight size={15} />} to="/store">
-              See Demo Store
+              {t('store_title')}
             </Button>
           </div>
         </div>
@@ -135,7 +137,7 @@ export default function BusinessPage() {
         </div>
 
         {/* Capabilities */}
-        <SectionHeader label="Platform" title="Everything your brand needs." subtitle="One integration, multiple capabilities — from sizing to styling to analytics." />
+        <SectionHeader label={t('nav_business')} title={t('feat_4_title')} subtitle={t('feat_4_desc')} />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {capabilities.map((cap, i) => (
             <div key={i} className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5 hover:shadow-card transition-all hover:-translate-y-0.5">
@@ -234,12 +236,12 @@ export default function BusinessPage() {
 
         {/* CTA */}
         <div className="bg-forest-600 rounded-2xl p-10 text-center text-white">
-          <h2 className="text-3xl mb-3">Ready to cut your return rate?</h2>
+          <h2 className="text-3xl mb-3">{t('pricing_cta_title')}</h2>
           <p className="text-forest-100 mb-7 max-w-md mx-auto text-sm leading-relaxed">
-            Start your 30-day free trial. No credit card required. Full access to all features from day one.
+            {t('pricing_cta_sub')}
           </p>
           <div className="flex justify-center gap-3 flex-wrap">
-            <Button to="/pricing" variant="secondary" size="lg">Start Free Trial</Button>
+            <Button to="/pricing" variant="secondary" size="lg">{t('pricing_start')}</Button>
             <Button variant="ghost" size="lg" className="text-white border border-white/30 hover:bg-white/10">
               Book a Demo
             </Button>

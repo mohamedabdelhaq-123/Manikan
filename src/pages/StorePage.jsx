@@ -4,14 +4,7 @@ import { products } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import SectionHeader from '../components/SectionHeader';
 import Badge from '../components/Badge';
-
-const categories = ['All', 'Tops', 'Bottoms', 'Dresses', 'Outerwear'];
-const sortOptions = ['Featured', 'Price: Low to High', 'Price: High to Low', 'Top Rated'];
-const genders = [
-  { value: 'all',   label: 'All' },
-  { value: 'women', label: '👗 Women' },
-  { value: 'men',   label: '👔 Men' },
-];
+import { useLanguage } from '../contexts/LanguageContext';
 
 // Products that are men-focused by category/name pattern
 const isMensProduct = (p) => {
@@ -20,11 +13,21 @@ const isMensProduct = (p) => {
 };
 const isWomensProduct = (p) => ['Dresses'].includes(p.category);
 
+const sortOptions = ['Featured', 'Price: Low to High', 'Price: High to Low', 'Top Rated'];
+const categoryKeys = ['All', 'Tops', 'Bottoms', 'Dresses', 'Outerwear'];
+
 export default function StorePage() {
+  const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('All');
   const [sortBy, setSortBy]               = useState('Featured');
   const [search, setSearch]               = useState('');
   const [activeGender, setActiveGender]   = useState('all');
+
+  const genders = [
+    { value: 'all',   label: t('store_gender_all') },
+    { value: 'women', label: t('store_women') },
+    { value: 'men',   label: t('store_men') },
+  ];
 
   const filtered = products
     .filter((p) => {
@@ -49,27 +52,27 @@ export default function StorePage() {
         <div className="max-w-7xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-forest-50 border border-forest-100 rounded-full px-3 py-1 mb-4">
             <span className="w-1.5 h-1.5 bg-forest-500 rounded-full animate-pulse" />
-            <span className="text-xs font-semibold text-forest-600 tracking-wide">Demo Store Experience</span>
+            <span className="text-xs font-semibold text-forest-600 tracking-wide">{t('store_title')}</span>
           </div>
           <SectionHeader
             label=""
-            title="Shop with Smart Fit"
-            subtitle="Every product has size recommendations and outfit suggestions built in. This is the experience your customers get."
+            title={t('store_title')}
+            subtitle={t('store_sub')}
           />
 
           {/* Search + Filter bar */}
           <div className="flex flex-col sm:flex-row gap-3 mt-4">
             <div className="relative flex-1">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={16} className="absolute start-3 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search products or brands..."
-                className="w-full pl-9 pr-4 py-2.5 border border-manikan-border rounded-xl text-sm bg-manikan-muted focus:outline-none focus:border-forest-400 focus:ring-1 focus:ring-forest-100 transition"
+                placeholder={t('store_search')}
+                className="w-full ps-9 pe-4 py-2.5 border border-manikan-border rounded-xl text-sm bg-manikan-muted focus:outline-none focus:border-forest-400 focus:ring-1 focus:ring-forest-100 transition"
               />
               {search && (
-                <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2">
+                <button onClick={() => setSearch('')} className="absolute end-3 top-1/2 -translate-y-1/2">
                   <X size={14} className="text-gray-400 hover:text-gray-600" />
                 </button>
               )}
@@ -105,7 +108,7 @@ export default function StorePage() {
 
           {/* Categories */}
           <div className="flex items-center gap-2 mt-3 flex-wrap">
-            {categories.map((cat) => (
+            {categoryKeys.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
@@ -123,7 +126,7 @@ export default function StorePage() {
                 onClick={() => setActiveCategory('All')}
                 className="text-xs text-gray-400 hover:text-gray-600 flex items-center gap-1"
               >
-                <X size={12} /> Clear
+                <X size={12} /> {t('store_clear')}
               </button>
             )}
           </div>
@@ -133,15 +136,15 @@ export default function StorePage() {
       {/* Product Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-center justify-between mb-6">
-          <p className="text-sm text-gray-500">{filtered.length} products</p>
-          <Badge color="forest" dot>AI Fit enabled</Badge>
+          <p className="text-sm text-gray-500">{filtered.length} {t('nav_store')}</p>
+          <Badge color="forest" dot>{t('store_ai_fit')}</Badge>
         </div>
 
         {filtered.length === 0 ? (
           <div className="text-center py-24">
-            <p className="text-gray-400 text-sm">No products match your search.</p>
+            <p className="text-gray-400 text-sm">{t('store_no_results')}</p>
             <button onClick={() => { setSearch(''); setActiveCategory('All'); }} className="mt-3 text-sm text-forest-500 hover:underline">
-              Clear filters
+              {t('store_clear')}
             </button>
           </div>
         ) : (
