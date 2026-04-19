@@ -23,7 +23,7 @@ export default function EventCard({ event }) {
   const Icon = iconMap[event.icon] || Calendar;
 
   return (
-    <div className="bg-white rounded-2xl border border-warm-border overflow-hidden shadow-soft">
+    <div className="bg-white rounded-2xl border border-manikan-border overflow-hidden shadow-soft">
       <div className="p-5">
         <div className="flex items-start gap-4">
           <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
@@ -53,7 +53,7 @@ export default function EventCard({ event }) {
 
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-4 w-full flex items-center justify-center gap-1.5 text-xs font-medium text-sage-600 hover:text-sage-700 transition-colors"
+          className="mt-4 w-full flex items-center justify-center gap-1.5 text-xs font-medium text-forest-600 hover:text-forest-700 transition-colors"
         >
           {expanded ? 'Hide outfits' : 'See outfit suggestions'}
           {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -63,13 +63,13 @@ export default function EventCard({ event }) {
       {expanded && (
         <div className="border-t border-gray-50 px-5 pb-5 pt-4 space-y-4 animate-fade-in">
           {event.suggestedOutfits.map((outfit, i) => (
-            <div key={i} className={`rounded-xl p-4 ${outfit.new ? 'bg-sand-50 border border-sand-200' : 'bg-sage-50 border border-sage-100'}`}>
+            <div key={i} className={`rounded-xl p-4 ${outfit.new ? 'bg-sand-50 border border-sand-200' : 'bg-forest-50 border border-forest-100'}`}>
               <div className="flex items-center justify-between mb-2">
-                <span className={`text-xs font-semibold ${outfit.new ? 'text-sand-700' : 'text-sage-700'}`}>
+                <span className={`text-xs font-semibold ${outfit.new ? 'text-sand-700' : 'text-forest-700'}`}>
                   {outfit.new ? <span className="flex items-center gap-1"><ShoppingBag size={12} />{outfit.label}</span>
                               : <span className="flex items-center gap-1"><CheckCircle size={12} />{outfit.label}</span>}
                 </span>
-                <span className={`text-xs font-bold ${outfit.new ? 'text-sand-600' : 'text-sage-600'}`}>
+                <span className={`text-xs font-bold ${outfit.new ? 'text-sand-600' : 'text-forest-600'}`}>
                   {outfit.score}% match
                 </span>
               </div>

@@ -5,8 +5,8 @@ import SectionHeader from '../components/SectionHeader';
 import Badge from '../components/Badge';
 import ConfidenceBar from '../components/ConfidenceBar';
 
-const widgetSnippet = `<!-- SmartFit Widget — Add to your product page -->
-<script src="https://cdn.smartfit.io/widget.js"
+const widgetSnippet = `<!-- Manikan Widget — Add to your product page -->
+<script src="https://cdn.manikan.io/widget.js"
   data-brand-id="YOUR_BRAND_ID"
   data-product-id="{{ product.id }}"
   data-currency="EGP"
@@ -24,9 +24,9 @@ const widgetSnippet = `<!-- SmartFit Widget — Add to your product page -->
 </style>`;
 
 const apiSnippet = `// Measurement API — Node.js example
-const SmartFit = require('@smartfit/sdk');
+const Manikan = require('@manikan/sdk');
 
-const sf = new SmartFit({ apiKey: 'sk_live_xxx' });
+const sf = new Manikan({ apiKey: 'sk_live_xxx' });
 
 const result = await sf.size.recommend({
   height: 165,   // cm
@@ -45,7 +45,7 @@ const capabilities = [
     title: 'Measurement AI',
     desc: 'Trained on 2M+ fitting sessions across 40+ local brands. Predicts size with 94% accuracy.',
     badge: '94% accuracy',
-    badgeColor: 'sage',
+    badgeColor: 'forest',
   },
   {
     icon: Code2,
@@ -109,12 +109,12 @@ export default function BusinessPage() {
         {/* Hero */}
         <div className="text-center mb-16">
           <Badge color="blue" className="mb-4">For Retailers & Brands</Badge>
-          <h1 className="text-4xl sm:text-5xl text-gray-900 mb-4">
+          <h1 className="text-4xl sm:text-5xl text-forest-900 mb-4">
             Reduce returns.<br />
-            <span className="text-sage-500">Grow with confidence.</span>
+            <span className="text-forest-600">Grow with confidence.</span>
           </h1>
           <p className="text-gray-500 max-w-xl mx-auto leading-relaxed mb-8">
-            SmartFit is a plug-and-play sizing and styling platform built for local and mid-tier fashion brands. No ML team required. Results in days, not months.
+            Manikan is a plug-and-play sizing and styling platform built for local and mid-tier fashion brands. No ML team required. Results in days, not months.
           </p>
           <div className="flex justify-center gap-3 flex-wrap">
             <Button to="/pricing" size="lg" icon={<Zap size={16} />}>Start Free Trial</Button>
@@ -127,8 +127,8 @@ export default function BusinessPage() {
         {/* Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
           {metrics.map((m, i) => (
-            <div key={i} className="bg-white rounded-2xl border border-warm-border shadow-soft p-5 text-center">
-              <p className="text-3xl font-display text-sage-500 mb-1">{m.value}</p>
+            <div key={i} className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5 text-center">
+              <p className="text-3xl font-display text-forest-600 mb-1">{m.value}</p>
               <p className="text-xs text-gray-500">{m.label}</p>
             </div>
           ))}
@@ -138,10 +138,10 @@ export default function BusinessPage() {
         <SectionHeader label="Platform" title="Everything your brand needs." subtitle="One integration, multiple capabilities — from sizing to styling to analytics." />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
           {capabilities.map((cap, i) => (
-            <div key={i} className="bg-white rounded-2xl border border-warm-border shadow-soft p-5 hover:shadow-card transition-all hover:-translate-y-0.5">
+            <div key={i} className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5 hover:shadow-card transition-all hover:-translate-y-0.5">
               <div className="flex items-start justify-between mb-3">
-                <div className="w-9 h-9 bg-sage-50 rounded-xl flex items-center justify-center">
-                  <cap.icon size={18} className="text-sage-500" />
+                <div className="w-9 h-9 bg-forest-50 rounded-xl flex items-center justify-center">
+                  <cap.icon size={18} className="text-forest-600" />
                 </div>
                 <Badge color={cap.badgeColor}>{cap.badge}</Badge>
               </div>
@@ -152,7 +152,7 @@ export default function BusinessPage() {
         </div>
 
         {/* Code Integration Section */}
-        <div className="bg-white rounded-2xl border border-warm-border shadow-soft overflow-hidden mb-16">
+        <div className="bg-white rounded-2xl border border-manikan-border shadow-soft overflow-hidden mb-16">
           <div className="border-b border-gray-100 px-6 py-4 flex items-center justify-between">
             <div>
               <h3 className="font-semibold text-gray-900">Integration</h3>
@@ -174,13 +174,13 @@ export default function BusinessPage() {
           </div>
 
           <div className="relative">
-            <pre className="bg-gray-950 text-gray-300 text-xs leading-relaxed p-6 overflow-x-auto font-mono">
+            <pre className="bg-forest-950 text-gray-300 text-xs leading-relaxed p-6 overflow-x-auto font-mono">
               <code>{activeTab === 'widget' ? widgetSnippet : apiSnippet}</code>
             </pre>
             <button
               onClick={() => handleCopy(activeTab === 'widget' ? widgetSnippet : apiSnippet)}
               className={`absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                copied ? 'bg-sage-500 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                copied ? 'bg-forest-600 text-white' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
               }`}
             >
               {copied ? <><Check size={12} /> Copied</> : <><Copy size={12} /> Copy</>}
@@ -189,7 +189,7 @@ export default function BusinessPage() {
 
           <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
             <p className="text-xs text-gray-500 flex items-center gap-1.5">
-              <Zap size={11} className="text-sage-400" />
+              <Zap size={11} className="text-forest-400" />
               Works with: {integrations.join(' · ')}
             </p>
           </div>
@@ -197,7 +197,7 @@ export default function BusinessPage() {
 
         {/* Results demo */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          <div className="bg-white rounded-2xl border border-warm-border shadow-soft p-6">
+          <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-6">
             <h3 className="font-semibold text-gray-900 mb-4 text-sm">Before SmartFit</h3>
             <div className="space-y-3">
               {[
@@ -218,24 +218,24 @@ export default function BusinessPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-sage-200 shadow-soft p-6">
-            <h3 className="font-semibold text-sage-700 mb-4 text-sm">After SmartFit — Month 1</h3>
+          <div className="bg-white rounded-2xl border border-forest-100 shadow-soft p-6">
+            <h3 className="font-semibold text-forest-700 mb-4 text-sm">After SmartFit — Month 1</h3>
             <div className="space-y-3">
               {[
                 { label: 'Return Rate (↓)',     value: 19, color: 'sage' },
                 { label: 'Size Accuracy (↑)',   value: 94, color: 'sage' },
                 { label: 'Conversion Rate (↑)', value: 3.8, color: 'sage' },
               ].map((m, i) => (
-                <ConfidenceBar key={i} label={m.label} value={m.value} color="sage" />
+                <ConfidenceBar key={i} label={m.label} value={m.value} color="forest" />
               ))}
             </div>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="bg-sage-500 rounded-2xl p-10 text-center text-white">
+        <div className="bg-forest-600 rounded-2xl p-10 text-center text-white">
           <h2 className="text-3xl mb-3">Ready to cut your return rate?</h2>
-          <p className="text-sage-100 mb-7 max-w-md mx-auto text-sm leading-relaxed">
+          <p className="text-forest-100 mb-7 max-w-md mx-auto text-sm leading-relaxed">
             Start your 30-day free trial. No credit card required. Full access to all features from day one.
           </p>
           <div className="flex justify-center gap-3 flex-wrap">

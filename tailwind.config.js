@@ -4,48 +4,115 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sage: {
-          50:  "#f2f7f4",
-          100: "#e0ece5",
-          200: "#c2d9cb",
-          300: "#97bfa7",
-          400: "#669f7f",
-          500: "#2D6A4F",
-          600: "#265c44",
-          700: "#1f4a37",
-          800: "#193b2c",
-          900: "#122b1f",
+        // ── Primary: Night Blue / Teal ──────────────────────────────────
+        forest: {
+          50:  "#EDF4F5",
+          100: "#D4E8EB",
+          200: "#A8D0D6",
+          300: "#72B0BA",
+          400: "#4A8F99",
+          500: "#2d545e",   // Night Blue (main)
+          600: "#265059",
+          700: "#1e4a53",
+          800: "#163c44",
+          900: "#12343b",   // Night Blue Shadow
+          950: "#0a2229",
         },
-        sand: {
-          50:  "#fdfaf6",
-          100: "#f8f1e4",
-          200: "#f0e0c4",
-          300: "#e8c99a",
-          400: "#dea96a",
-          500: "#d4894a",
-          600: "#c06e35",
-          700: "#9d5529",
-          800: "#7d4122",
-          900: "#5e301a",
+        // ── Accent: Sand Tan ────────────────────────────────────────────
+        gold: {
+          50:  "#FDF7EE",
+          100: "#FAEDD8",
+          200: "#F5D9B0",
+          300: "#ECC480",
+          400: "#e1b382",   // Sand Tan (main)
+          500: "#D49B63",
+          600: "#c89666",   // Sand Tan Shadow
+          700: "#A87548",
+          800: "#885C38",
+          900: "#6E4A2C",
         },
-        warm: {
-          bg:   "#FAFAF7",
-          card: "#FFFFFF",
-          border: "#E8E5E0",
+        // keep cream as very light teal/sand neutral
+        cream: {
+          50:  "#F4F8F8",
+          100: "#E6F0F1",
+          200: "#C8E0E3",
+          300: "#A0C7CC",
+          400: "#72A8AF",
+          500: "#4A8892",
+        },
+        // ── Neutral surface tokens ───────────────────────────────────────
+        manikan: {
+          bg:     "#F3F7F7",   // very light teal-tinted background
+          card:   "#FFFFFF",
+          border: "#CAD6D8",   // cool teal-tinted border
+          muted:  "#E6EDEF",   // light teal surface
         },
       },
       fontFamily: {
-        display: ["'DM Serif Display'", "Georgia", "serif"],
+        display: ["'Cormorant Garamond'", "'DM Serif Display'", "Georgia", "serif"],
         body:    ["'DM Sans'", "system-ui", "sans-serif"],
       },
       borderRadius: {
         "2xl": "1rem",
         "3xl": "1.5rem",
+        "4xl": "2rem",
       },
       boxShadow: {
-        soft: "0 2px 20px rgba(0,0,0,0.06)",
-        card: "0 4px 30px rgba(0,0,0,0.08)",
-        lift: "0 8px 40px rgba(0,0,0,0.12)",
+        soft:    "0 2px 20px rgba(18,52,59,0.07)",
+        card:    "0 4px 32px rgba(18,52,59,0.10)",
+        lift:    "0 8px 48px rgba(18,52,59,0.16)",
+        gold:    "0 4px 24px rgba(200,150,102,0.22)",
+        glow:    "0 0 40px rgba(45,84,94,0.18)",
+      },
+      animation: {
+        "fade-up":       "fadeUp 0.6s ease-out forwards",
+        "fade-in":       "fadeIn 0.5s ease-in-out forwards",
+        "slide-right":   "slideRight 0.5s ease-out forwards",
+        "scale-in":      "scaleIn 0.35s ease-out forwards",
+        "float":         "float 3s ease-in-out infinite",
+        "shimmer":       "shimmer 2s linear infinite",
+        "spin-slow":     "spin 8s linear infinite",
+        "bounce-gentle": "bounceGentle 2s ease-in-out infinite",
+        "pulse-gold":    "pulseGold 2s ease-in-out infinite",
+        "glow-pulse":    "glowPulse 3s ease-in-out infinite",
+      },
+      keyframes: {
+        fadeUp: {
+          "0%":   { opacity: "0", transform: "translateY(28px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        fadeIn: {
+          "0%":   { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideRight: {
+          "0%":   { opacity: "0", transform: "translateX(-20px)" },
+          "100%": { opacity: "1", transform: "translateX(0)" },
+        },
+        scaleIn: {
+          "0%":   { opacity: "0", transform: "scale(0.92)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%":      { transform: "translateY(-8px)" },
+        },
+        shimmer: {
+          "0%":   { backgroundPosition: "-200% center" },
+          "100%": { backgroundPosition: "200% center" },
+        },
+        bounceGentle: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%":      { transform: "translateY(-4px)" },
+        },
+        pulseGold: {
+          "0%, 100%": { opacity: "1" },
+          "50%":      { opacity: "0.6" },
+        },
+        glowPulse: {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(45,84,94,0.12)" },
+          "50%":      { boxShadow: "0 0 44px rgba(45,84,94,0.30)" },
+        },
       },
     },
   },

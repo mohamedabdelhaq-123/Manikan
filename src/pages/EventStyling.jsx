@@ -39,10 +39,10 @@ export default function EventStyling() {
         />
 
         {/* Calendar connections */}
-        <div className="bg-white rounded-2xl border border-warm-border shadow-soft p-5 mb-8">
+        <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5 mb-8">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-gray-900">Connected Calendars</h3>
-            <button className="text-xs text-sage-500 hover:text-sage-600 flex items-center gap-1 font-medium">
+            <button className="text-xs text-forest-600 hover:text-forest-600 flex items-center gap-1 font-medium">
               <Plus size={12} /> Add calendar
             </button>
           </div>
@@ -51,15 +51,15 @@ export default function EventStyling() {
               <div
                 key={cal.id}
                 className={`flex items-center gap-2.5 p-3 rounded-xl border ${
-                  cal.connected ? 'border-sage-200 bg-sage-50' : 'border-gray-100 bg-gray-50 opacity-60'
+                  cal.connected ? 'border-forest-100 bg-forest-50' : 'border-gray-100 bg-gray-50 opacity-60'
                 }`}
               >
-                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${cal.connected ? 'bg-sage-100' : 'bg-gray-100'}`}>
-                  <cal.icon size={14} className={cal.connected ? 'text-sage-600' : 'text-gray-400'} />
+                <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${cal.connected ? 'bg-forest-100' : 'bg-gray-100'}`}>
+                  <cal.icon size={14} className={cal.connected ? 'text-forest-600' : 'text-gray-400'} />
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs font-medium text-gray-700 truncate">{cal.label}</p>
-                  <p className={`text-xs ${cal.connected ? 'text-sage-500' : 'text-gray-400'}`}>
+                  <p className={`text-xs ${cal.connected ? 'text-forest-600' : 'text-gray-400'}`}>
                     {cal.connected ? 'Connected' : 'Connect'}
                   </p>
                 </div>
@@ -78,7 +78,7 @@ export default function EventStyling() {
                 onClick={() => setActiveFilter(type)}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
                   activeFilter === type
-                    ? 'bg-sage-500 text-white shadow-sm'
+                    ? 'bg-forest-600 text-white shadow-sm'
                     : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
                 }`}
               >
@@ -88,11 +88,11 @@ export default function EventStyling() {
           </div>
 
           {/* Wardrobe toggle */}
-          <div className="flex items-center gap-2.5 bg-white border border-warm-border rounded-xl px-4 py-2.5 shadow-soft shrink-0">
+          <div className="flex items-center gap-2.5 bg-white border border-manikan-border rounded-xl px-4 py-2.5 shadow-soft shrink-0">
             <span className="text-xs font-medium text-gray-600">Use my wardrobe first</span>
             <button
               onClick={() => setUseWardrobe(!useWardrobe)}
-              className={`relative w-9 h-5 rounded-full transition-colors ${useWardrobe ? 'bg-sage-500' : 'bg-gray-200'}`}
+              className={`relative w-9 h-5 rounded-full transition-colors ${useWardrobe ? 'bg-forest-600' : 'bg-gray-200'}`}
             >
               <span className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${useWardrobe ? 'translate-x-4' : ''}`} />
             </button>
@@ -100,7 +100,7 @@ export default function EventStyling() {
         </div>
 
         {useWardrobe && (
-          <div className="bg-sage-50 border border-sage-100 rounded-xl px-4 py-3 mb-6 flex items-center gap-2.5 text-sm text-sage-700">
+          <div className="bg-forest-50 border border-forest-100 rounded-xl px-4 py-3 mb-6 flex items-center gap-2.5 text-sm text-forest-700">
             <RefreshCw size={14} className="shrink-0" />
             Wardrobe mode on — outfit suggestions prioritise clothes you already own.
           </div>
@@ -109,7 +109,7 @@ export default function EventStyling() {
         {/* Events */}
         <div className="space-y-4">
           {filtered.length === 0 ? (
-            <div className="text-center py-16 bg-white rounded-2xl border border-warm-border">
+            <div className="text-center py-16 bg-white rounded-2xl border border-manikan-border">
               <Calendar size={32} className="text-gray-200 mx-auto mb-3" />
               <p className="text-gray-400 text-sm">No events for this type.</p>
             </div>
@@ -133,8 +133,8 @@ export default function EventStyling() {
             { label: 'Smart purchase suggestions',  value: '3', sub: 'High-impact additions' },
             { label: 'Estimated savings this month', value: '2,100 EGP', sub: 'vs. buying new' },
           ].map((s, i) => (
-            <div key={i} className="bg-white rounded-xl border border-warm-border shadow-soft p-4 text-center">
-              <p className="text-2xl font-display text-sage-500">{s.value}</p>
+            <div key={i} className="bg-white rounded-xl border border-manikan-border shadow-soft p-4 text-center">
+              <p className="text-2xl font-display text-forest-600">{s.value}</p>
               <p className="text-xs font-medium text-gray-700 mt-0.5">{s.label}</p>
               <p className="text-xs text-gray-400">{s.sub}</p>
             </div>

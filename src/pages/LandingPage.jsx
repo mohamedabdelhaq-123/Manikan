@@ -1,17 +1,50 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, TrendingDown, Ruler, CalendarCheck, Shirt,
   BarChart3, ShieldCheck, Zap, Users, Star, ChevronRight,
-  Package, RefreshCw, Frown, CheckCircle,
+  Package, RefreshCw, Frown, CheckCircle, Sparkles, Play,
 } from 'lucide-react';
 import Button from '../components/Button';
-import SectionHeader from '../components/SectionHeader';
 
+// ─── Intersection Observer Hook ────────────────────────────────────────────
+function useInView(threshold = 0.15) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setInView(true); },
+      { threshold }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+}
+
+// ─── Animated Counter ───────────────────────────────────────────────────────
+function Counter({ end, suffix = '', duration = 1800 }) {
+  const [count, setCount] = useState(0);
+  const [ref, inView] = useInView(0.3);
+  useEffect(() => {
+    if (!inView) return;
+    let start = 0;
+    const increment = end / (duration / 16);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) { setCount(end); clearInterval(timer); }
+      else setCount(Math.floor(start));
+    }, 16);
+    return () => clearInterval(timer);
+  }, [inView, end, duration]);
+  return <span ref={ref}>{count}{suffix}</span>;
+}
+
+// ─── Data ──────────────────────────────────────────────────────────────────
 const stats = [
-  { value: '30%',  label: 'of online fashion orders are returned' },
-  { value: '70%',  label: 'of returns are due to sizing issues' },
-  { value: '2.3×', label: 'higher retention with accurate sizing' },
+  { value: 30,  suffix: '%',  label: 'of online fashion orders are returned' },
+  { value: 70,  suffix: '%',  label: 'of returns are due to sizing issues' },
+  { value: 42,  suffix: '%',  label: 'average return reduction with Manikan' },
 ];
 
 const features = [
@@ -19,25 +52,29 @@ const features = [
     icon: Ruler,
     title: 'AI Size Recommendation',
     desc: 'Users enter their measurements once. Our model predicts the right size with confidence scoring across all brands.',
-    color: 'sage',
+    color: 'forest',
+    delay: 'stagger-1',
   },
   {
     icon: CalendarCheck,
     title: 'Event-Based Styling',
     desc: 'Connected to Google Calendar and global events, we recommend complete outfits tailored to the occasion.',
-    color: 'blue',
+    color: 'gold',
+    delay: 'stagger-2',
   },
   {
     icon: Shirt,
     title: 'Wardrobe Intelligence',
-    desc: 'Users build a digital wardrobe. We show them what to wear from what they already own — reducing impulse buys.',
-    color: 'amber',
+    desc: 'Users build a digital wardrobe. We show them what to wear from what they already own.',
+    color: 'forest',
+    delay: 'stagger-3',
   },
   {
     icon: BarChart3,
     title: 'Retailer Analytics',
-    desc: 'Brands get data on fit preferences, return drivers, and popular size combos to make smarter inventory decisions.',
-    color: 'rose',
+    desc: 'Brands get data on fit preferences, return drivers, and popular size combos for smarter inventory decisions.',
+    color: 'gold',
+    delay: 'stagger-4',
   },
 ];
 
@@ -51,10 +88,10 @@ const benefits = [
 ];
 
 const steps = [
-  { num: '01', title: 'Add the widget',       desc: 'Embed our size & style widget on your product page with one line of code.' },
-  { num: '02', title: 'Customers enter fit',  desc: 'Height, weight, and fit preference — takes 20 seconds. Done once, saved forever.' },
-  { num: '03', title: 'AI recommends size',   desc: "Our model predicts the right size with a confidence score, tailored to your brand's sizing." },
-  { num: '04', title: 'Style suggestions',    desc: 'Based on upcoming events and their wardrobe, we complete the look for them.' },
+  { num: '01', title: 'Add the widget',       desc: 'Embed our size & style widget on your product page with one line of code.',        icon: Package },
+  { num: '02', title: 'Customers enter fit',  desc: 'Height, weight, and fit preference — takes 20 seconds. Done once, saved forever.', icon: Ruler },
+  { num: '03', title: 'AI recommends size',   desc: "Our model predicts the right size with a confidence score, tailored to your brand's sizing.", icon: Zap },
+  { num: '04', title: 'Style suggestions',    desc: 'Based on upcoming events and their wardrobe, we complete the look for them.',        icon: Sparkles },
 ];
 
 const testimonials = [
@@ -63,213 +100,404 @@ const testimonials = [
     name: 'Dina M.',
     role: 'Head of E-Commerce, Forma Basics',
     avatar: 'DM',
+    rating: 5,
   },
   {
-    quote: 'Customers are spending more per session because they\'re getting full outfit recommendations, not just a single item.',
+    quote: "Men never used to bother with size tools — but with Manikan's confidence score, our male shoppers started trusting the recommendation immediately.",
     name: 'Yusuf A.',
     role: 'Founder, Thread & Co.',
     avatar: 'YA',
+    rating: 5,
   },
 ];
 
 const problems = [
-  { icon: RefreshCw, title: '$500B in returns globally', desc: 'Fashion has the highest return rate of any e-commerce category.' },
-  { icon: Frown,     title: 'Shoppers guessing sizes',  desc: 'Different sizing charts per brand leads to frustration and cart abandonment.' },
-  { icon: Package,   title: 'Wardrobe under-utilised',  desc: 'Most people wear only 20% of what they own. The rest goes to waste.' },
+  { icon: RefreshCw, title: '$500B in returns globally',  desc: 'Fashion has the highest return rate of any e-commerce category.' },
+  { icon: Frown,     title: 'Shoppers guessing sizes',   desc: 'Different sizing charts per brand leads to frustration and cart abandonment.' },
+  { icon: Package,   title: 'Wardrobe under-utilised',   desc: 'Most people wear only 20% of what they own. The rest goes to waste.' },
 ];
 
+// ─── Section Wrapper with animation ────────────────────────────────────────
+function AnimatedSection({ children, className = '' }) {
+  const [ref, inView] = useInView();
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-700 ${
+        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+// ─── Decorative ornament ────────────────────────────────────────────────────
+function Ornament({ label }) {
+  return (
+    <div className="flex items-center gap-3 mb-4">
+      <div className="h-px flex-1 max-w-[40px] bg-gradient-to-r from-transparent to-gold-400" />
+      <span className="text-xs font-semibold text-gold-600 uppercase tracking-[0.2em]">{label}</span>
+      <div className="h-px flex-1 max-w-[40px] bg-gradient-to-l from-transparent to-gold-400" />
+    </div>
+  );
+}
+
+// ─── Component ─────────────────────────────────────────────────────────────
 export default function LandingPage() {
   return (
-    <div className="overflow-x-hidden">
-      {/* Hero */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-sage-50/60 to-warm-bg">
-        <div className="max-w-7xl mx-auto">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 bg-white border border-sage-200 rounded-full px-4 py-1.5 mb-6 shadow-soft">
-              <span className="w-2 h-2 bg-sage-500 rounded-full animate-pulse" />
-              <span className="text-xs font-semibold text-sage-700">AI-Powered Fashion Tech · Investor Demo</span>
+    <div className="overflow-x-hidden bg-manikan-bg">
+
+      {/* ── HERO ─────────────────────────────────────────────────────── */}
+      <section className="relative pt-36 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        {/* Background design */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-forest-50 to-transparent rounded-full -translate-y-1/2 translate-x-1/3 opacity-70" />
+          <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-gold-50 to-transparent rounded-full translate-y-1/3 -translate-x-1/4 opacity-60" />
+          {/* Decorative dots */}
+          <div className="absolute top-32 right-24 w-2 h-2 bg-gold-400 rounded-full animate-pulse-gold" />
+          <div className="absolute top-64 right-48 w-1.5 h-1.5 bg-forest-300 rounded-full animate-float" style={{ animationDelay: '0.5s' }} />
+          <div className="absolute bottom-20 right-20 w-2 h-2 bg-gold-300 rounded-full animate-pulse-gold" style={{ animationDelay: '1s' }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+            {/* Left: text */}
+            <div className="animate-fade-up">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2.5 bg-white border border-manikan-border rounded-full px-4 py-2 mb-8 shadow-soft">
+                <span className="w-2 h-2 bg-gold-400 rounded-full animate-pulse-gold" />
+                <span className="text-xs font-semibold text-gold-600 tracking-wide">AI-Powered Fashion Tech · Investor Demo</span>
+              </div>
+
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-display font-medium text-forest-900 leading-[1.06] text-balance mb-6">
+                Dress Smarter.<br />
+                <span className="shimmer-text">Fit Better.</span><br />
+                Shop Confidently.
+              </h1>
+
+              <p className="text-base text-gray-500 leading-relaxed mb-10 max-w-lg">
+                Manikan helps fashion brands of all kinds cut return rates and recommend the right size
+                every time — for men, women, and everyone in between — all with one embeddable AI platform.
+              </p>
+
+              <div className="flex flex-wrap gap-3 mb-10">
+                <Link
+                  to="/store"
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-forest-600 text-white text-sm font-medium rounded-xl hover:bg-forest-700 transition-all duration-300 shadow-card hover:shadow-lift btn-glow group"
+                >
+                  <Zap size={17} />
+                  Try the Demo
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  to="/business"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 border border-manikan-border text-forest-700 text-sm font-medium rounded-xl hover:border-forest-300 hover:bg-forest-50 transition-all duration-300"
+                >
+                  For Businesses
+                  <ChevronRight size={16} />
+                </Link>
+              </div>
+
+              {/* Trust indicators */}
+              <div className="flex flex-wrap gap-5 text-xs text-gray-400">
+                {['Free to try', 'No credit card needed', 'Works with any platform'].map((t) => (
+                  <span key={t} className="flex items-center gap-1.5">
+                    <CheckCircle size={12} className="text-forest-400" /> {t}
+                  </span>
+                ))}
+              </div>
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl text-gray-900 leading-[1.08] text-balance mb-6">
-              Reduce returns.<br />
-              <span className="text-sage-500">Improve fit.</span><br />
-              Smarter fashion.
-            </h1>
-            <p className="text-lg text-gray-500 leading-relaxed mb-8 max-w-xl">
-              SmartFit helps local and mid-tier fashion brands cut return rates, recommend the right size every time, and style customers for any occasion — all with one embeddable platform.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button to="/store" size="lg" icon={<Zap size={18} />}>
-                Try the Demo
-              </Button>
-              <Button to="/business" size="lg" variant="secondary" iconRight={<ArrowRight size={16} />}>
-                For Businesses
-              </Button>
-            </div>
-          </div>
 
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {stats.map((s, i) => (
-              <div key={i} className="bg-white rounded-2xl p-5 border border-warm-border shadow-soft">
-                <p className="text-3xl font-display text-sage-500 mb-1">{s.value}</p>
-                <p className="text-sm text-gray-500">{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            {/* Right: gender-neutral stat visual */}
+            <div className="relative hidden lg:flex items-center justify-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
+              <div className="relative w-80 h-80">
+                {/* Background ring */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-forest-50 to-forest-100 border border-forest-200" />
 
-      {/* Problem */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader
-            label="The Problem"
-            title="Fashion has a fit crisis."
-            subtitle="Returns are expensive, size guessing is frustrating, and wardrobes are full of clothes no one wears. It's a problem for brands and shoppers alike."
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-            {problems.map((p, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 border border-warm-border shadow-soft">
-                <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center mb-4">
-                  <p.icon size={20} className="text-red-400" />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2 text-base">{p.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{p.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Solution / Features */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader
-            label="The Solution"
-            title="One platform. Every fit, every occasion."
-            subtitle="SmartFit integrates into any fashion brand's product page to guide shoppers from browse to the perfect outfit — with AI that understands their body, calendar, and wardrobe."
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {features.map((f, i) => (
-              <div key={i} className="rounded-2xl p-6 bg-warm-bg border border-warm-border hover:shadow-card transition-all duration-200 hover:-translate-y-0.5">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${
-                  f.color === 'sage'  ? 'bg-sage-50' :
-                  f.color === 'blue'  ? 'bg-blue-50' :
-                  f.color === 'amber' ? 'bg-amber-50' : 'bg-rose-50'
-                }`}>
-                  <f.icon size={20} className={
-                    f.color === 'sage'  ? 'text-sage-500' :
-                    f.color === 'blue'  ? 'text-blue-500' :
-                    f.color === 'amber' ? 'text-amber-500' : 'text-rose-500'
-                  } />
-                </div>
-                <h3 className="font-semibold text-gray-900 mb-2 text-sm">{f.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader
-            label="How It Works"
-            title="Up and running in minutes."
-            subtitle="For retailers, integration is a single embed. For shoppers, it's a 20-second setup that unlocks a personalized fashion experience."
-            center
-          />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((step, i) => (
-              <div key={i} className="relative">
-                <div className="bg-white rounded-2xl p-6 border border-warm-border shadow-soft h-full">
-                  <span className="text-4xl font-display text-sage-100 font-bold block mb-3">{step.num}</span>
-                  <h3 className="font-semibold text-gray-900 mb-2 text-sm">{step.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
-                </div>
-                {i < steps.length - 1 && (
-                  <div className="hidden lg:flex absolute top-1/2 -right-3 z-10">
-                    <ChevronRight size={20} className="text-sage-300" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-sage-500">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-sm font-semibold text-sage-200 uppercase tracking-widest mb-2">Benefits</p>
-            <h2 className="text-3xl sm:text-4xl text-white">Built for brands. Loved by shoppers.</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {benefits.map((b, i) => (
-              <div key={i} className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 flex items-start gap-4 border border-white/20">
-                <div className="w-9 h-9 bg-white/20 rounded-xl flex items-center justify-center shrink-0">
-                  <b.icon size={18} className="text-white" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-sage-200 mb-0.5">{b.audience}</p>
-                  <p className="text-sm font-medium text-white">{b.label}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader label="Early Results" title="Brands are already seeing impact." center />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {testimonials.map((t, i) => (
-              <div key={i} className="bg-warm-bg rounded-2xl p-7 border border-warm-border">
-                <div className="flex gap-0.5 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} size={14} className="text-amber-400 fill-amber-400" />
-                  ))}
-                </div>
-                <p className="text-gray-700 leading-relaxed mb-6 text-sm">"{t.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-sage-100 flex items-center justify-center text-xs font-bold text-sage-700">
-                    {t.avatar}
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-gray-900">{t.name}</p>
-                    <p className="text-xs text-gray-400">{t.role}</p>
+                {/* Center M monogram */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-28 h-28 rounded-2xl bg-forest-700 flex items-center justify-center shadow-lift animate-glow-pulse">
+                    <span className="font-display text-white text-6xl font-bold leading-none">M</span>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
-          <div className="bg-white rounded-3xl p-10 border border-warm-border shadow-card">
-            <h2 className="text-3xl sm:text-4xl text-gray-900 mb-3">Ready to see it in action?</h2>
-            <p className="text-gray-500 mb-8 max-w-md mx-auto text-sm leading-relaxed">
-              Explore the demo store, try the size recommender, or learn how to integrate SmartFit into your brand.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button to="/store" size="lg">Browse Demo Store</Button>
-              <Button to="/pricing" size="lg" variant="secondary">View Pricing</Button>
+                {/* Floating cards */}
+                <div className="absolute -top-6 -right-6 bg-white rounded-2xl shadow-card p-4 animate-float border border-manikan-border">
+                  <p className="text-2xl font-display text-forest-600">94%</p>
+                  <p className="text-xs text-gray-500">Fit accuracy</p>
+                </div>
+                <div className="absolute -bottom-4 -left-8 bg-white rounded-2xl shadow-card p-4 animate-float border border-manikan-border" style={{ animationDelay: '1s' }}>
+                  <p className="text-2xl font-display text-forest-700">42%</p>
+                  <p className="text-xs text-gray-500">Less returns</p>
+                </div>
+                <div className="absolute top-1/2 -right-14 bg-forest-700 rounded-2xl shadow-card p-3 animate-float" style={{ animationDelay: '0.5s' }}>
+                  <Sparkles size={20} className="text-white" />
+                  <p className="text-xs text-white/90 mt-1">AI Styled</p>
+                </div>
+                <div className="absolute -top-4 left-0 bg-white rounded-2xl shadow-card px-3 py-2 animate-float border border-manikan-border" style={{ animationDelay: '1.5s' }}>
+                  <p className="text-xs font-medium text-forest-700">👔 Men &nbsp;·&nbsp; 👗 Women</p>
+                </div>
+              </div>
             </div>
-            <div className="mt-6 flex flex-wrap justify-center gap-5 text-xs text-gray-400">
-              {['Free to try', 'No credit card', 'Works with any platform'].map((t) => (
-                <span key={t} className="flex items-center gap-1.5">
-                  <CheckCircle size={12} className="text-sage-400" /> {t}
-                </span>
+          </div>
+
+          {/* Stats row */}
+          <AnimatedSection className="mt-20">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {stats.map((s, i) => (
+                <div key={i} className={`bg-white rounded-2xl p-6 border border-manikan-border shadow-soft card-hover stagger-${i + 1} group`}>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <p className="text-4xl font-display text-gold-600">
+                      <Counter end={s.value} suffix={s.suffix} />
+                    </p>
+                  </div>
+                  <p className="text-sm text-gray-500">{s.label}</p>
+                  <div className="mt-4 h-0.5 w-0 bg-gold-400 group-hover:w-full transition-all duration-500 rounded-full" />
+                </div>
               ))}
             </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── PROBLEM ──────────────────────────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 section-pattern">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection className="text-center mb-14">
+            <Ornament label="The Problem" />
+            <h2 className="text-4xl sm:text-5xl font-display text-forest-900 leading-tight mb-4">
+              Fashion has a fit crisis.
+            </h2>
+            <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
+              Returns are expensive, size guessing is frustrating, and wardrobes overflow with clothes
+              nobody wears. It costs brands and shoppers alike.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {problems.map((p, i) => (
+              <AnimatedSection key={i} className={`stagger-${i + 1}`}>
+                <div className="bg-white rounded-2xl p-7 border border-manikan-border shadow-soft card-hover h-full group">
+                  <div className="w-12 h-12 bg-gold-50 rounded-2xl flex items-center justify-center mb-5 border border-gold-200 group-hover:bg-gold-100 transition-colors">
+                    <p.icon size={22} className="text-gold-600" />
+                  </div>
+                  <h3 className="font-display text-xl text-forest-900 mb-2">{p.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{p.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── SOLUTION / FEATURES ──────────────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-forest-900 relative overflow-hidden">
+        {/* bg pattern */}
+        <div className="absolute inset-0 pointer-events-none opacity-10">
+          <div className="absolute top-0 left-1/2 w-[500px] h-[500px] bg-gold-400 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-forest-300 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
+          <AnimatedSection className="text-center mb-14">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-px w-10 bg-gold-400/60" />
+              <span className="text-xs font-semibold text-gold-400 uppercase tracking-[0.2em]">The Solution</span>
+              <div className="h-px w-10 bg-gold-400/60" />
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-display text-white leading-tight mb-4">
+              One platform. Every fit,<br />every occasion.
+            </h2>
+            <p className="text-forest-200 max-w-2xl mx-auto leading-relaxed">
+              Manikan integrates into any fashion brand's product page to guide shoppers from browse
+              to the perfect outfit — with AI that understands their body, calendar, and wardrobe.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {features.map((f, i) => (
+              <AnimatedSection key={i} className={f.delay}>
+                <div className="bg-forest-800/70 backdrop-blur rounded-2xl p-6 border border-gold-400/20 card-hover h-full group hover:border-gold-400/50 transition-all">
+                  {/* Solid Sand Tan icon — fully visible on dark bg */}
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 bg-gold-400 shadow-gold">
+                    <f.icon size={22} className="text-forest-900" />
+                  </div>
+                  <h3 className="font-display text-lg text-white mb-2 group-hover:text-gold-300 transition-colors">{f.title}</h3>
+                  <p className="text-sm text-forest-300 leading-relaxed">{f.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ─────────────────────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection className="text-center mb-14">
+            <Ornament label="How It Works" />
+            <h2 className="text-4xl sm:text-5xl font-display text-forest-900 leading-tight mb-4">
+              Up and running in minutes.
+            </h2>
+            <p className="text-gray-500 max-w-2xl mx-auto leading-relaxed">
+              For retailers, integration is a single embed. For shoppers, it's a 20-second setup
+              that unlocks a personalized fashion experience.
+            </p>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {steps.map((step, i) => (
+              <AnimatedSection key={i} className={`stagger-${i + 1}`}>
+                <div className="relative bg-white rounded-2xl p-6 border border-manikan-border shadow-soft card-hover h-full group">
+                  {/* Connector */}
+                  {i < steps.length - 1 && (
+                    <div className="hidden lg:block absolute top-8 -right-3 z-10">
+                      <ChevronRight size={20} className="text-gold-400" />
+                    </div>
+                  )}
+                  <div className="w-11 h-11 bg-gold-50 border border-gold-200 rounded-2xl flex items-center justify-center mb-4 group-hover:bg-gold-500 transition-colors duration-300">
+                    <step.icon size={20} className="text-gold-600 group-hover:text-white transition-colors duration-300" />
+                  </div>
+                  <span className="text-5xl font-display text-gold-100 font-bold block mb-3 leading-none">
+                    {step.num}
+                  </span>
+                  <h3 className="font-semibold text-forest-900 mb-2 text-sm">{step.title}</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── BENEFITS ─────────────────────────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-forest-600 to-forest-800 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-gold-400/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-forest-300/10 rounded-full blur-2xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto relative">
+          <AnimatedSection className="text-center mb-14">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-px w-10 bg-gold-400/60" />
+              <span className="text-xs font-semibold text-gold-300 uppercase tracking-[0.2em]">Benefits</span>
+              <div className="h-px w-10 bg-gold-400/60" />
+            </div>
+            <h2 className="text-4xl sm:text-5xl font-display text-white leading-tight">
+              Built for brands. Loved by shoppers.
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {benefits.map((b, i) => (
+              <AnimatedSection key={i} className={`stagger-${i + 1}`}>
+                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-5 flex items-start gap-4 border border-white/15 card-hover group">
+                  <div className="w-10 h-10 bg-gold-400 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-gold-300 transition-colors shadow-gold">
+                    <b.icon size={18} className="text-forest-900" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-gold-300 mb-1 tracking-wide">{b.audience}</p>
+                    <p className="text-sm font-medium text-white leading-snug">{b.label}</p>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ─────────────────────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 section-pattern">
+        <div className="max-w-7xl mx-auto">
+          <AnimatedSection className="text-center mb-14">
+            <Ornament label="Early Results" />
+            <h2 className="text-4xl sm:text-5xl font-display text-forest-900 leading-tight mb-4">
+              Brands are already seeing impact.
+            </h2>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {testimonials.map((t, i) => (
+              <AnimatedSection key={i} className={`stagger-${i + 1}`}>
+                <div className="bg-white rounded-2xl p-8 border border-manikan-border shadow-soft card-hover relative overflow-hidden">
+                  {/* Sand Tan top accent bar */}
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-400 via-gold-300 to-gold-400" />
+                  {/* Tan quote mark */}
+                  <div className="absolute top-4 right-6 font-display text-8xl text-gold-100 select-none leading-none">&ldquo;</div>
+
+                  <div className="flex gap-0.5 mb-5">
+                    {[...Array(t.rating)].map((_, j) => (
+                      <Star key={j} size={15} className="text-gold-500 fill-gold-400" />
+                    ))}
+                  </div>
+
+                  <p className="text-gray-700 leading-relaxed mb-7 text-sm relative">&ldquo;{t.quote}&rdquo;</p>
+
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-xs font-bold text-forest-900 shadow-gold">
+                      {t.avatar}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-forest-900">{t.name}</p>
+                      <p className="text-xs text-gray-400">{t.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ──────────────────────────────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <AnimatedSection>
+            <div className="relative bg-white rounded-3xl p-12 border border-manikan-border shadow-card overflow-hidden">
+              {/* decorative top accent */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-forest-500 via-forest-300 to-forest-500" />
+
+              {/* M monogram instead of logo */}
+              <div className="w-16 h-16 rounded-2xl bg-forest-700 flex items-center justify-center mx-auto mb-6 shadow-soft">
+                <span className="font-display text-white text-3xl font-bold leading-none">M</span>
+              </div>
+
+              <h2 className="text-4xl sm:text-5xl font-display text-forest-900 mb-4 leading-tight">
+                Ready to see it in action?
+              </h2>
+              <p className="text-gray-500 mb-10 max-w-md mx-auto text-sm leading-relaxed">
+                Explore the demo store, try the size recommender, or learn how to integrate Manikan
+                into your brand's experience.
+              </p>
+
+              <div className="flex flex-wrap justify-center gap-3 mb-8">
+                <Link
+                  to="/store"
+                  className="inline-flex items-center gap-2.5 px-8 py-3.5 bg-forest-600 text-white text-sm font-medium rounded-xl hover:bg-forest-700 transition-all shadow-card hover:shadow-lift btn-glow group"
+                >
+                  Browse Demo Store
+                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  to="/pricing"
+                  className="inline-flex items-center gap-2 px-8 py-3.5 border border-manikan-border text-forest-700 text-sm font-medium rounded-xl hover:border-forest-300 hover:bg-forest-50 transition-all"
+                >
+                  View Pricing
+                </Link>
+              </div>
+
+              <div className="flex flex-wrap justify-center gap-6 text-xs text-gray-400">
+                {['Free to try', 'No credit card', 'Works with any platform'].map((t) => (
+                  <span key={t} className="flex items-center gap-1.5">
+                    <CheckCircle size={12} className="text-forest-400" /> {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
     </div>
