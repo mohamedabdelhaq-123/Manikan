@@ -77,13 +77,13 @@ export default function Visualization() {
               onDragLeave={() => setDragging(false)}
               onDrop={handleDrop}
               className={`rounded-2xl border-2 border-dashed p-12 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
-                dragging ? 'border-sage-400 bg-sage-50' : 'border-gray-200 hover:border-sage-300 hover:bg-sage-50/30 bg-white'
+                dragging ? 'border-sage-400 bg-forest-50' : 'border-gray-200 hover:border-sage-300 hover:bg-forest-50/30 bg-white'
               }`}
               onClick={() => fileRef.current?.click()}
             >
               <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={simulateUpload} />
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-colors ${dragging ? 'bg-sage-100' : 'bg-gray-100'}`}>
-                <ImagePlus size={28} className={dragging ? 'text-sage-500' : 'text-gray-400'} />
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-colors ${dragging ? 'bg-forest-100' : 'bg-gray-100'}`}>
+                <ImagePlus size={28} className={dragging ? 'text-forest-600' : 'text-gray-400'} />
               </div>
               <p className="text-gray-700 font-medium mb-1">Drop your photo here</p>
               <p className="text-sm text-gray-400 mb-5">or click to browse</p>
@@ -92,7 +92,7 @@ export default function Visualization() {
 
             {/* Info */}
             <div className="space-y-5">
-              <div className="bg-white rounded-2xl border border-warm-border shadow-soft p-6">
+              <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-6">
                 <h3 className="font-semibold text-gray-900 mb-4 text-sm">What the AI analyses</h3>
                 <div className="space-y-3">
                   {[
@@ -102,15 +102,15 @@ export default function Visualization() {
                     'Best cuts and lengths for your shape',
                   ].map((item, i) => (
                     <div key={i} className="flex items-center gap-2.5 text-sm text-gray-600">
-                      <CheckCircle size={15} className="text-sage-400 shrink-0" />
+                      <CheckCircle size={15} className="text-forest-400 shrink-0" />
                       {item}
                     </div>
                   ))}
                 </div>
               </div>
-              <div className="bg-sage-50 border border-sage-100 rounded-2xl p-5">
-                <p className="text-xs font-semibold text-sage-700 mb-1">🔒 Privacy first</p>
-                <p className="text-xs text-sage-600 leading-relaxed">Photos are analysed locally and never stored. Your image is discarded immediately after analysis.</p>
+              <div className="bg-forest-50 border border-forest-100 rounded-2xl p-5">
+                <p className="text-xs font-semibold text-forest-700 mb-1">🔒 Privacy first</p>
+                <p className="text-xs text-forest-600 leading-relaxed">Photos are analysed locally and never stored. Your image is discarded immediately after analysis.</p>
               </div>
 
               <Button onClick={simulateUpload} fullWidth size="lg" icon={<Upload size={16} />}>
@@ -122,9 +122,9 @@ export default function Visualization() {
 
         {/* Stage: Analysing */}
         {stage === 'preview' && (
-          <div className="bg-white rounded-2xl border border-warm-border shadow-card p-12 text-center animate-fade-in">
-            <div className="w-20 h-20 bg-sage-50 rounded-full flex items-center justify-center mx-auto mb-5">
-              <Sparkles size={32} className="text-sage-500 animate-pulse" />
+          <div className="bg-white rounded-2xl border border-manikan-border shadow-card p-12 text-center animate-fade-in">
+            <div className="w-20 h-20 bg-forest-50 rounded-full flex items-center justify-center mx-auto mb-5">
+              <Sparkles size={32} className="text-forest-600 animate-pulse" />
             </div>
             <h3 className="text-xl text-gray-900 mb-2">Analysing your photo...</h3>
             <p className="text-sm text-gray-400 mb-6">AI is mapping your proportions and body shape</p>
@@ -144,7 +144,7 @@ export default function Visualization() {
             {/* Header */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Badge color="sage" dot>Analysis complete</Badge>
+                <Badge color="forest" dot>Analysis complete</Badge>
                 <span className="text-sm text-gray-400">Body type: Straight / Athletic</span>
               </div>
               <button
@@ -158,7 +158,7 @@ export default function Visualization() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
               {/* Placeholder avatar */}
               <div className="lg:col-span-2">
-                <div className="bg-white rounded-2xl border border-warm-border shadow-soft overflow-hidden">
+                <div className="bg-white rounded-2xl border border-manikan-border shadow-soft overflow-hidden">
                   <div className="aspect-[2/3] bg-gradient-to-b from-sage-50 to-sage-100 flex items-center justify-center relative">
                     <img
                       src={mockStyles[activeStyle].imgHint}
@@ -186,7 +186,7 @@ export default function Visualization() {
               {/* Right panel */}
               <div className="lg:col-span-3 space-y-5">
                 {/* Style suggestions */}
-                <div className="bg-white rounded-2xl border border-warm-border shadow-soft p-5">
+                <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5">
                   <h3 className="text-sm font-semibold text-gray-900 mb-4">Outfit Styles</h3>
                   <div className="space-y-2">
                     {mockStyles.map((style, i) => (
@@ -195,19 +195,19 @@ export default function Visualization() {
                         onClick={() => setActiveStyle(i)}
                         className={`w-full flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all ${
                           activeStyle === i
-                            ? 'border-sage-300 bg-sage-50'
+                            ? 'border-sage-300 bg-forest-50'
                             : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
                         }`}
                       >
                         <div className={`w-2 h-2 rounded-full shrink-0 ${
-                          style.color === 'sage' ? 'bg-sage-500' :
+                          style.color === 'sage' ? 'bg-forest-600' :
                           style.color === 'blue' ? 'bg-blue-500' : 'bg-rose-500'
                         }`} />
                         <div className="flex-1 min-w-0">
-                          <p className={`text-sm font-medium ${activeStyle === i ? 'text-sage-700' : 'text-gray-700'}`}>{style.label}</p>
+                          <p className={`text-sm font-medium ${activeStyle === i ? 'text-forest-700' : 'text-gray-700'}`}>{style.label}</p>
                           <p className="text-xs text-gray-400 truncate">{style.fit}</p>
                         </div>
-                        <span className={`text-xs font-semibold shrink-0 ${activeStyle === i ? 'text-sage-600' : 'text-gray-400'}`}>
+                        <span className={`text-xs font-semibold shrink-0 ${activeStyle === i ? 'text-forest-600' : 'text-gray-400'}`}>
                           {style.score}%
                         </span>
                       </button>
@@ -216,12 +216,12 @@ export default function Visualization() {
                 </div>
 
                 {/* Fit feedback */}
-                <div className="bg-white rounded-2xl border border-warm-border shadow-soft p-5">
+                <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5">
                   <h3 className="text-sm font-semibold text-gray-900 mb-4">Fit Feedback</h3>
                   <div className="space-y-4">
                     {fitFeedback.map((f, i) => (
                       <div key={i}>
-                        <ConfidenceBar value={f.value} label={f.label} color="sage" />
+                        <ConfidenceBar value={f.value} label={f.label} color="forest" />
                         <p className="text-xs text-gray-400 mt-0.5 pl-0.5">{f.note}</p>
                       </div>
                     ))}
