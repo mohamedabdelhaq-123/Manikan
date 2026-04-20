@@ -1,67 +1,92 @@
 export const products = [
   {
     id: "1",
-    name: "Relaxed Linen Shirt",
-    brand: "Forma Basics",
-    category: "Tops",
-    price: 480,
+    name: "Linen Tunic Set",
+    brand: "Manikan Modest",
+    category: "Dresses",
+    price: 680,
     currency: "EGP",
     sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["White", "Sand", "Sage"],
-    rating: 4.6,
-    reviews: 128,
+    colors: ["Taupe", "Ivory", "Sage"],
+    rating: 4.8,
+    reviews: 142,
     fit: "Relaxed",
     fabric: "100% Linen",
     description:
-      "A breathable, easy-wearing linen shirt cut for everyday comfort. Slightly oversized for a laid-back silhouette that pairs with anything from jeans to tailored trousers.",
+      "A breathable, versatile tunic-and-trouser set in soft linen. The modest long-sleeve tunic pairs with wide-leg trousers for an effortless, put-together look perfect for any occasion.",
     images: [
-      "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=600&q=80",
-      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80",
+      "/garments/female-dress.jpg",
     ],
-    tags: ["Casual", "Work", "Summer"],
+    tags: ["Modest", "Everyday", "Casual", "Sets"],
+    gender: "female",
+    ar: {
+      name: "طقم تونيك من الكتان",
+      category: "فساتين",
+      fit: "مريح",
+      fabric: "100% كتان",
+      description: "طقم تونيك وبنطلون عملي ومتعدد الاستخدامات من الكتان الناعم. يأتي التونيك المحتشم بأكمام طويلة مع بنطلون واسع لإطلالة مريحة وأنيقة تناسب جميع المناسبات.",
+    }
   },
   {
     id: "2",
-    name: "Slim-Fit Chinos",
-    brand: "Thread & Co.",
-    category: "Bottoms",
-    price: 620,
+    name: "Floral Embroidered Abaya",
+    brand: "Manikan Modest",
+    category: "Dresses",
+    price: 950,
     currency: "EGP",
-    sizes: ["28", "30", "32", "34", "36"],
-    colors: ["Navy", "Khaki", "Olive"],
-    rating: 4.8,
-    reviews: 203,
-    fit: "Slim",
-    fabric: "98% Cotton, 2% Elastane",
+    sizes: ["S", "M", "L", "XL", "2XL"],
+    colors: ["Charcoal", "Midnight Blue", "Forest"],
+    rating: 4.7,
+    reviews: 89,
+    fit: "Flowy",
+    fabric: "Premium Polyester Crepe",
     description:
-      "Versatile slim-fit chinos that move with you. A clean, tapered cut makes them equally at home in a casual Friday meeting or a weekend brunch.",
+      "A stunning full-length abaya with intricate white floral embroidery on the chest and sleeves. The A-line flared silhouette flows beautifully for special occasions and everyday elegance.",
     images: [
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=600&q=80",
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&q=80",
+      "/garments/female-dress2.jpg",
     ],
-    tags: ["Work", "Smart Casual"],
+    tags: ["Modest", "Event", "Abaya", "Wedding Guest"],
+    gender: "female",
+    ar: {
+      name: "عباءة مطرزة بالزهور",
+      category: "فساتين",
+      fit: "واسع وانسيابي",
+      fabric: "كريب بوليستر ممتاز",
+      description: "عباءة كاملة الطول ومذهلة بتطريزات زهور بيضاء دقيقة على الصدر والأكمام. تنسدل بقصة واسعة على شكل حرف A، مما يجعلها مثالية للمناسبات الخاصة والأناقة اليومية.",
+    }
   },
   {
     id: "3",
-    name: "Knit Midi Dress",
-    brand: "Forma Basics",
+    name: "Egyptian Heritage Abaya",
+    brand: "Manikan Modest",
     category: "Dresses",
-    price: 750,
+    price: 1250,
     currency: "EGP",
-    sizes: ["XS", "S", "M", "L"],
-    colors: ["Cream", "Dusty Rose", "Slate"],
-    rating: 4.7,
-    reviews: 94,
-    fit: "Regular",
-    fabric: "Viscose Blend",
+    sizes: ["XS", "S", "M", "L", "XL"],
+    colors: ["Ivory & Gold", "Black & Gold", "Blush & Silver"],
+    rating: 4.9,
+    reviews: 211,
+    fit: "Tailored Flare",
+    fabric: "Chiffon & Satin Blend",
     description:
-      "A fluid, figure-skimming midi dress in a soft knit. Elegant enough for events, relaxed enough for daily wear. Minimal styling needed.",
+      "An exquisite open-front abaya inspired by ancient Egyptian heritage. Features hand-embroidered hieroglyphic gold motifs along the lapels, waistband and cuffs. A statement piece for formal events and celebrations.",
     images: [
-      "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&q=80",
-      "https://images.unsplash.com/photo-1566479179817-e09f5aa0ea8a?w=600&q=80",
+      "/garments/female-dress3.png",
     ],
-    tags: ["Wedding Guest", "Event", "Date Night"],
+    tags: ["Modest", "Event", "Heritage", "Luxury", "Abaya"],
+    gender: "female",
+    hasTryOn: true,
+    tryOnImage: "/try-on-images/female-model1-dress3.png",
+    tryOnVideo: "/videos/try-on-dress3-female1.mp4",
+    ar: {
+      name: "عباءة التراث المصري",
+      category: "فساتين",
+      fit: "مفصلة وواسعة من الأسفل",
+      fabric: "مزيج من الشيفون والساتان",
+      description: "عباءة رائعة مفتوحة من الأمام مستوحاة من التراث المصري القديم. تتميز بزخارف ذهبية هيروغليفية مطرزة يدوياً على الياقات وحزام الخصر والأساور. قطعة استثنائية للفعاليات الرسمية والاحتفالات.",
+    }
   },
+
   {
     id: "4",
     name: "Structured Blazer",
@@ -82,6 +107,13 @@ export const products = [
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80",
     ],
     tags: ["Work", "Smart Casual", "Event"],
+    ar: {
+      name: "سترة بليزر مهيكلة",
+      category: "ملابس خارجية",
+      fit: "مفصل",
+      fabric: "مزيج الصوف",
+      description: "سترة بليزر مهيكلة ومبطنة بالكامل بقصة أكتاف نظيفة وزر إغلاق واحد. قطعة ترفع من مستوى أي إطلالة على الفور.",
+    }
   },
   {
     id: "5",
@@ -103,6 +135,13 @@ export const products = [
       "https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=600&q=80",
     ],
     tags: ["Casual", "Everyday"],
+    ar: {
+      name: "تيشيرت قطني يومي",
+      category: "بلايز",
+      fit: "عادي",
+      fabric: "100% قطن عضوي",
+      description: "التيشيرت اليومي المفضل لديك. مصنوع من القطن العضوي بياقة دائرية نظيفة وقصة صندوقية قليلاً. صُنع ليدوم وليرتدى كطبقة أساسية.",
+    }
   },
   {
     id: "6",
@@ -124,7 +163,22 @@ export const products = [
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80",
     ],
     tags: ["Work", "Smart Casual", "Event"],
+    ar: {
+      name: "بنطلون واسع بطيات",
+      category: "سراويل",
+      fit: "واسع",
+      fabric: "قماش كريب",
+      description: "بنطلون واسع الساقين بطيات انسيابية وخصر عالٍ وجيوب جانبية. تصميم عصري يجمع بين البساطة والأناقة في نفس الوقت.",
+    }
   },
 ];
 
 export const getProductById = (id) => products.find((p) => p.id === id);
+
+export const localizeProduct = (product, lang) => {
+  if (!product) return null;
+  if (lang === 'ar' && product.ar) {
+    return { ...product, ...product.ar };
+  }
+  return product;
+};

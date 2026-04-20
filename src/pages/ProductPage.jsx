@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Star, Heart, ShoppingBag, Ruler, CalendarCheck, ChevronRight, Check } from 'lucide-react';
-import { getProductById, products } from '../data/products';
+import { ArrowLeft, Star, Heart, ShoppingBag, ChevronRight, Check, Ruler } from 'lucide-react';
+import { getProductById, products, localizeProduct } from '../data/products';
+import { useLanguage } from '../contexts/LanguageContext';
 import Button from '../components/Button';
 import Badge from '../components/Badge';
 import ProductCard from '../components/ProductCard';
+import ManikanWidget from '../components/ManikanWidget';
 
 export default function ProductPage() {
+  const { t, lang }       = useLanguage();
   const { id }            = useParams();
   const navigate          = useNavigate();
-  const product           = getProductById(id);
+  const rawProduct        = getProductById(id);
+  const product           = localizeProduct(rawProduct, lang);
   const [activeImg, setActiveImg]     = useState(0);
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
@@ -18,8 +22,8 @@ export default function ProductPage() {
 
   if (!product) return (
     <div className="pt-32 text-center">
-      <p className="text-gray-500">Product not found.</p>
-      <Button to="/store" variant="secondary" className="mt-4">Back to Store</Button>
+      <p className="text-gray-500">{t('prod_not_found')}</p>
+      <Button to="/store" variant="secondary" className="mt-4">{t('prod_back_store')}</Button>
     </div>
   );
 
@@ -36,7 +40,7 @@ export default function ProductPage() {
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-sm text-gray-400 mb-6">
           <Link to="/store" className="hover:text-gray-600 flex items-center gap-1">
-            <ArrowLeft size={14} /> Store
+            <ArrowLeft size={14} className={lang === 'ar' ? 'rotate-180' : ''} /> {t('nav_store')}
           </Link>
           <ChevronRight size={12} />
           <span className="text-gray-500">{product.category}</span>
@@ -44,27 +48,27 @@ export default function ProductPage() {
           <span className="text-gray-800 font-medium">{product.name}</span>
         </nav>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* Images */}
-          <div className="space-y-3">
-            <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-gray-50 border border-warm-border">
+        <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-8 items-start">
+          {/* Images — smaller column */}
+          <div className="space-y-2">
+            <div className="aspect-square rounded-2xl overflow-hidden bg-gray-50 border border-warm-border">
               <img
                 src={product.images[activeImg]}
                 alt={product.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top"
               />
             </div>
             {product.images.length > 1 && (
-              <div className="flex gap-3">
+              <div className="flex gap-2">
                 {product.images.map((img, i) => (
                   <button
                     key={i}
                     onClick={() => setActiveImg(i)}
-                    className={`w-20 h-24 rounded-xl overflow-hidden border-2 transition-all ${
+                    className={`w-16 h-20 rounded-xl overflow-hidden border-2 transition-all ${
                       activeImg === i ? 'border-sage-500' : 'border-transparent hover:border-gray-200'
                     }`}
                   >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
+                    <img src={img} alt="" className="w-full h-full object-cover object-top" />
                   </button>
                 ))}
               </div>
@@ -91,25 +95,25 @@ export default function ProductPage() {
                   <Star key={i} size={14} fill={i < Math.round(product.rating) ? 'currentColor' : 'none'} />
                 ))}
               </div>
-              <span className="text-sm text-gray-500">{product.rating} ({product.reviews} reviews)</span>
+              <span className="text-sm text-gray-500">{product.rating} ({product.reviews} {t('prod_reviews')})</span>
             </div>
 
             <div className="flex items-center gap-3 mb-6">
-              <span className="text-2xl font-semibold text-gray-900">{product.price.toLocaleString()} {product.currency}</span>
-              <Badge color="sage" dot>In Stock</Badge>
+              <span className="text-2xl font-semibold text-gray-900">{product.price.toLocaleString()} {t('currency')}</span>
+              <Badge color="sage" dot>{t('prod_in_stock')}</Badge>
             </div>
 
             <p className="text-sm text-gray-500 leading-relaxed mb-6">{product.description}</p>
 
             <div className="space-y-1 text-sm text-gray-500 mb-6">
-              <p><span className="font-medium text-gray-700">Fabric:</span> {product.fabric}</p>
-              <p><span className="font-medium text-gray-700">Fit:</span> {product.fit}</p>
-              <p><span className="font-medium text-gray-700">Category:</span> {product.category}</p>
+              <p><span className="font-medium text-gray-700">{t('prod_fabric')}</span> {product.fabric}</p>
+              <p><span className="font-medium text-gray-700">{t('prod_fit')}</span> {product.fit}</p>
+              <p><span className="font-medium text-gray-700">{t('prod_category')}</span> {product.category}</p>
             </div>
 
             {/* Colors */}
             <div className="mb-5">
-              <p className="text-sm font-medium text-gray-700 mb-2">Colour: <span className="text-gray-500 font-normal">{selectedColor || 'Select'}</span></p>
+              <p className="text-sm font-medium text-gray-700 mb-2">{t('prod_colour')} <span className="text-gray-500 font-normal">{selectedColor || t('prod_select')}</span></p>
               <div className="flex gap-2 flex-wrap">
                 {product.colors.map((c) => (
                   <button
@@ -130,9 +134,9 @@ export default function ProductPage() {
             {/* Sizes */}
             <div className="mb-4">
               <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-medium text-gray-700">Size: <span className="text-gray-500 font-normal">{selectedSize || 'Select'}</span></p>
+                <p className="text-sm font-medium text-gray-700">{t('prod_size')} <span className="text-gray-500 font-normal">{selectedSize || t('prod_select')}</span></p>
                 <Link to="/size" className="text-xs text-sage-500 hover:text-sage-600 flex items-center gap-1 font-medium">
-                  <Ruler size={12} /> Size guide
+                  <Ruler size={12} /> {t('prod_size_guide')}
                 </Link>
               </div>
               <div className="flex gap-2 flex-wrap">
@@ -152,30 +156,9 @@ export default function ProductPage() {
               </div>
             </div>
 
-            {/* SmartFit CTAs */}
-            <div className="bg-sage-50 border border-sage-100 rounded-2xl p-4 mb-5 space-y-2">
-              <p className="text-xs font-semibold text-sage-700 mb-3 flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 bg-sage-500 rounded-full" /> SmartFit Features
-              </p>
-              <Button
-                to="/size"
-                variant="outline"
-                fullWidth
-                icon={<Ruler size={15} />}
-                size="md"
-              >
-                Find My Size — AI Recommendation
-              </Button>
-              <Button
-                to="/events"
-                variant="ghost"
-                fullWidth
-                icon={<CalendarCheck size={15} />}
-                size="md"
-                className="border border-sage-200 hover:bg-sage-100"
-              >
-                Style for My Event
-              </Button>
+            {/* Manikan Virtual Try-On Widget */}
+            <div className="mb-5">
+              <ManikanWidget product={product} />
             </div>
 
             {/* Add to Cart */}
@@ -187,7 +170,7 @@ export default function ProductPage() {
                 icon={added ? <Check size={18} /> : <ShoppingBag size={18} />}
                 className={added ? 'bg-emerald-500 hover:bg-emerald-600' : ''}
               >
-                {added ? 'Added to Bag' : 'Add to Bag'}
+                {added ? t('prod_added_to_bag') : t('prod_add_to_bag')}
               </Button>
             </div>
 
@@ -203,7 +186,7 @@ export default function ProductPage() {
         {/* Related Products */}
         {related.length > 0 && (
           <div className="mt-16">
-            <h2 className="text-2xl text-gray-900 mb-6">More from {product.category}</h2>
+            <h2 className="text-2xl text-gray-900 mb-6">{t('prod_more_from')} {product.category}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
               {related.map((p) => <ProductCard key={p.id} product={p} />)}
             </div>

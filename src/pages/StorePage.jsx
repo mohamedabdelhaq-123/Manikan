@@ -16,6 +16,8 @@ const isWomensProduct = (p) => ['Dresses'].includes(p.category);
 const sortOptions = ['Featured', 'Price: Low to High', 'Price: High to Low', 'Top Rated'];
 const categoryKeys = ['All', 'Tops', 'Bottoms', 'Dresses', 'Outerwear'];
 
+const getSortKey = (sortStr) => 'sort_' + sortStr.replace(/[^a-zA-Z]/g, '');
+
 export default function StorePage() {
   const { t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState('All');
@@ -84,7 +86,7 @@ export default function StorePage() {
                 onChange={(e) => setSortBy(e.target.value)}
                 className="border border-manikan-border rounded-xl text-sm px-3 py-2.5 bg-white focus:outline-none focus:border-forest-400 transition text-forest-800"
               >
-                {sortOptions.map((o) => <option key={o}>{o}</option>)}
+                {sortOptions.map((o) => <option key={o} value={o}>{t(getSortKey(o))}</option>)}
               </select>
             </div>
           </div>
@@ -118,7 +120,7 @@ export default function StorePage() {
                     : 'bg-white border border-manikan-border text-gray-600 hover:border-forest-200 hover:text-forest-700'
                 }`}
               >
-                {cat}
+                {t(`cat_${cat}`)}
               </button>
             ))}
             {activeCategory !== 'All' && (
