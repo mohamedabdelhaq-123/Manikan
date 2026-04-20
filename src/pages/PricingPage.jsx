@@ -64,32 +64,32 @@ export default function PricingPage() {
   ];
 
   const payPerUse = [
-    { action: 'Size Recommendation', price: `0.15 ${t('currency')}`, unit: 'per request' },
-    { action: 'Event Styling Query',  price: `0.30 ${t('currency')}`, unit: 'per query' },
-    { action: 'AI Visualisation',    price: `1.50 ${t('currency')}`, unit: 'per session' },
-    { action: 'API Call (general)',  price: `0.05 ${t('currency')}`, unit: 'per call' },
+    { action: t('ppu_action_1'), price: `0.15 ${t('currency')}`, unit: t('ppu_unit_1') },
+    { action: t('ppu_action_2'),  price: `0.30 ${t('currency')}`, unit: t('ppu_unit_2') },
+    { action: t('ppu_action_3'),    price: `1.50 ${t('currency')}`, unit: t('ppu_unit_3') },
+    { action: t('ppu_action_4'),  price: `0.05 ${t('currency')}`, unit: t('ppu_unit_4') },
   ];
 
   const faqs = [
     {
-      q: 'Is there a free trial?',
-      a: 'Yes — the Starter plan is completely free for 30 days with full access to all features. No credit card required.',
+      q: t('faq_1_q'),
+      a: t('faq_1_a'),
     },
     {
-      q: 'Can I switch between plans?',
-      a: 'Absolutely. You can upgrade, downgrade, or switch to pay-per-use at any time from your dashboard.',
+      q: t('faq_2_q'),
+      a: t('faq_2_a'),
     },
     {
-      q: 'What platforms does the widget support?',
-      a: 'Manikan works with Shopify, WooCommerce, Salla, Zid, Magento, and any custom storefront via our JavaScript SDK.',
+      q: t('faq_3_q'),
+      a: t('faq_3_a'),
     },
     {
-      q: 'Is our customer data safe?',
-      a: 'Yes. Measurement data is encrypted and never shared. Photos used for visualisation are never stored. We are GDPR and PDPA compliant.',
+      q: t('faq_4_q'),
+      a: t('faq_4_a'),
     },
     {
-      q: 'Do you offer custom pricing for large brands?',
-      a: 'Yes. Contact our sales team for volume pricing, white-label options, and enterprise SLAs.',
+      q: t('faq_5_q'),
+      a: t('faq_5_a'),
     },
   ];
 
@@ -110,16 +110,16 @@ export default function PricingPage() {
 
           {/* Billing toggle */}
           <div className="flex items-center justify-center gap-3 mt-8">
-            <span className={`text-sm font-medium transition-colors ${billing === 'monthly' ? 'text-forest-800' : 'text-gray-400'}`}>Monthly</span>
+            <span className={`text-sm font-medium transition-colors ${billing === 'monthly' ? 'text-forest-800' : 'text-gray-400'}`}>{t('pricing_monthly')}</span>
             <button
               onClick={() => setBilling(billing === 'monthly' ? 'annual' : 'monthly')}
               className={`relative w-12 h-6 rounded-full transition-all duration-300 ${billing === 'annual' ? 'bg-forest-500' : 'bg-gray-200'}`}
             >
-              <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-300 ${billing === 'annual' ? 'translate-x-6' : ''}`} />
+              <span className={`absolute top-0.5 ${t('dir') === 'rtl' ? 'right-0.5' : 'left-0.5'} w-5 h-5 rounded-full bg-white shadow transition-transform duration-300 ${billing === 'annual' ? (t('dir') === 'rtl' ? '-translate-x-6' : 'translate-x-6') : ''}`} />
             </button>
             <span className={`text-sm font-medium transition-colors ${billing === 'annual' ? 'text-forest-800' : 'text-gray-400'}`}>
-              Annual
-              <Badge color="gold" className="ms-2 align-middle">Save 20%</Badge>
+              {t('pricing_annual')}
+              <Badge color="gold" className="ms-2 align-middle">{t('pricing_save_20')}</Badge>
             </span>
           </div>
         </div>
@@ -200,7 +200,7 @@ export default function PricingPage() {
         <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-7 mb-16">
           <div className="flex items-center gap-3 mb-5">
             <h2 className="font-display text-2xl text-forest-900">{t('pricing_ppu_title')}</h2>
-            <Badge color="gold">Flexible</Badge>
+            <Badge color="gold">{t('pricing_flexible')}</Badge>
           </div>
           <p className="text-sm text-gray-500 mb-6">{t('pricing_ppu_sub')}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -212,7 +212,7 @@ export default function PricingPage() {
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-400 mt-4">Billed at end of each calendar month. Minimum charge: 50 {currency}.</p>
+          <p className="text-xs text-gray-400 mt-4">{t('pricing_billed')} {currency}.</p>
         </div>
 
         {/* FAQ */}

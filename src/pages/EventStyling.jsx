@@ -22,9 +22,11 @@ const typeColors = {
 };
 
 export default function EventStyling() {
+  const { t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState('All');
   const [useWardrobe, setUseWardrobe]   = useState(true);
-  const { t } = useLanguage();
+
+  const getEventTypeKey = (type) => 'event_type_' + type.replace(/\s+/g, '_');
 
   const types   = ['All', ...new Set(upcomingEvents.map((e) => e.type))];
   const filtered = activeFilter === 'All'
@@ -35,7 +37,7 @@ export default function EventStyling() {
     <div className="pt-24 min-h-screen">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <SectionHeader
-          label={t('event_label')}
+          label="Smart Event Styling"
           title={t('event_title')}
           subtitle={t('event_subtitle')}
         />
@@ -43,9 +45,9 @@ export default function EventStyling() {
         {/* Calendar connections */}
         <div className="bg-white rounded-2xl border border-manikan-border shadow-soft p-5 mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-gray-900">{t('event_connected_cal')}</h3>
+            <h3 className="text-sm font-semibold text-gray-900">{t('event_calendars')}</h3>
             <button className="text-xs text-forest-600 hover:text-forest-600 flex items-center gap-1 font-medium">
-              <Plus size={12} /> {t('event_add_cal')}
+              <Plus size={12} /> {t('event_add_calendar')}
             </button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -84,7 +86,7 @@ export default function EventStyling() {
                     : 'bg-white border border-gray-200 text-gray-600 hover:border-gray-300'
                 }`}
               >
-                {type}
+                {t(getEventTypeKey(type))}
               </button>
             ))}
           </div>
@@ -104,7 +106,7 @@ export default function EventStyling() {
         {useWardrobe && (
           <div className="bg-forest-50 border border-forest-100 rounded-xl px-4 py-3 mb-6 flex items-center gap-2.5 text-sm text-forest-700">
             <RefreshCw size={14} className="shrink-0" />
-            {t('event_wardrobe_mode')}
+            {t('event_wardrobe_mode_on')}
           </div>
         )}
 
@@ -122,7 +124,7 @@ export default function EventStyling() {
 
         {/* Add event prompt */}
         <div className="mt-8 bg-white rounded-2xl border border-dashed border-gray-200 p-6 text-center">
-          <p className="text-sm text-gray-500 mb-3">{t('event_missing')}</p>
+          <p className="text-sm text-gray-500 mb-3">{t('event_manual_prompt')}</p>
           <Button variant="secondary" icon={<Plus size={15} />} size="sm">
             {t('event_add_manual')}
           </Button>
@@ -131,9 +133,9 @@ export default function EventStyling() {
         {/* Stats bar */}
         <div className="mt-10 grid grid-cols-3 gap-4">
           {[
-            { label: t('stat_wardrobe_label'), value: '8', sub: t('stat_wardrobe_sub') },
-            { label: t('stat_purchase_label'),  value: '3', sub: t('stat_purchase_sub') },
-            { label: t('stat_savings_label'), value: '2,100 EGP', sub: t('stat_savings_sub') },
+            { label: t('event_stat1_label'), value: '8', sub: t('event_stat1_sub') },
+            { label: t('event_stat2_label'),  value: '3', sub: t('event_stat2_sub') },
+            { label: t('event_stat3_label'), value: `2,100 ${t('currency')}`, sub: t('event_stat3_sub') },
           ].map((s, i) => (
             <div key={i} className="bg-white rounded-xl border border-manikan-border shadow-soft p-4 text-center">
               <p className="text-2xl font-display text-forest-600">{s.value}</p>
