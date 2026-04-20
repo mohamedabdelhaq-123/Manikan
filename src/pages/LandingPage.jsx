@@ -4,6 +4,7 @@ import {
   ArrowRight, TrendingDown, Ruler, CalendarCheck, Shirt,
   BarChart3, ShieldCheck, Zap, Users, Star, ChevronRight,
   Package, RefreshCw, Frown, CheckCircle, Sparkles, Play,
+  LayoutGrid,
 } from 'lucide-react';
 import Button from '../components/Button';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -43,9 +44,9 @@ function Counter({ end, suffix = '', duration = 1800 }) {
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 const stats = [
-  { value: 30,  suffix: '%',  label: 'of online fashion orders are returned' },
-  { value: 70,  suffix: '%',  label: 'of returns are due to sizing issues' },
-  { value: 42,  suffix: '%',  label: 'average return reduction with Manikan' },
+  { value: 30, suffix: '%', label: 'of online fashion orders are returned' },
+  { value: 70, suffix: '%', label: 'of returns are due to sizing issues' },
+  { value: 42, suffix: '%', label: 'average return reduction with Manikan' },
 ];
 
 const features = [
@@ -80,19 +81,19 @@ const features = [
 ];
 
 const benefits = [
-  { icon: TrendingDown, label: 'Reduce returns up to 42%',     audience: 'For Brands' },
-  { icon: ShieldCheck,  label: 'Improve size accuracy to 94%', audience: 'For Brands' },
-  { icon: Zap,          label: 'Increase conversion by 28%',   audience: 'For Brands' },
-  { icon: Users,        label: 'Higher customer satisfaction', audience: 'For Shoppers' },
-  { icon: Shirt,        label: 'Use existing wardrobe better', audience: 'For Shoppers' },
-  { icon: Star,         label: 'Discover outfits for any event', audience: 'For Shoppers' },
+  { icon: TrendingDown, label: 'Reduce returns up to 42%', audience: 'For Brands' },
+  { icon: ShieldCheck, label: 'Improve size accuracy to 94%', audience: 'For Brands' },
+  { icon: Zap, label: 'Increase conversion by 28%', audience: 'For Brands' },
+  { icon: Users, label: 'Higher customer satisfaction', audience: 'For Shoppers' },
+  { icon: Shirt, label: 'Use existing wardrobe better', audience: 'For Shoppers' },
+  { icon: Star, label: 'Discover outfits for any event', audience: 'For Shoppers' },
 ];
 
 const steps = [
-  { num: '01', title: 'Add the widget',       desc: 'Embed our size & style widget on your product page with one line of code.',        icon: Package },
-  { num: '02', title: 'Customers enter fit',  desc: 'Height, weight, and fit preference — takes 20 seconds. Done once, saved forever.', icon: Ruler },
-  { num: '03', title: 'AI recommends size',   desc: "Our model predicts the right size with a confidence score, tailored to your brand's sizing.", icon: Zap },
-  { num: '04', title: 'Style suggestions',    desc: 'Based on upcoming events and their wardrobe, we complete the look for them.',        icon: Sparkles },
+  { num: '01', title: 'Add the widget', desc: 'Embed our size & style widget on your product page with one line of code.', icon: Package },
+  { num: '02', title: 'Customers enter fit', desc: 'Height, weight, and fit preference — takes 20 seconds. Done once, saved forever.', icon: Ruler },
+  { num: '03', title: 'AI recommends size', desc: "Our model predicts the right size with a confidence score, tailored to your brand's sizing.", icon: Zap },
+  { num: '04', title: 'Style suggestions', desc: 'Based on upcoming events and their wardrobe, we complete the look for them.', icon: Sparkles },
 ];
 
 const testimonials = [
@@ -113,9 +114,9 @@ const testimonials = [
 ];
 
 const problems = [
-  { icon: RefreshCw, title: '$500B in returns globally',  desc: 'Fashion has the highest return rate of any e-commerce category.' },
-  { icon: Frown,     title: 'Shoppers guessing sizes',   desc: 'Different sizing charts per brand leads to frustration and cart abandonment.' },
-  { icon: Package,   title: 'Wardrobe under-utilised',   desc: 'Most people wear only 20% of what they own. The rest goes to waste.' },
+  { icon: RefreshCw, title: '$500B in returns globally', desc: 'Fashion has the highest return rate of any e-commerce category.' },
+  { icon: Frown, title: 'Shoppers guessing sizes', desc: 'Different sizing charts per brand leads to frustration and cart abandonment.' },
+  { icon: Package, title: 'Wardrobe under-utilised', desc: 'Most people wear only 20% of what they own. The rest goes to waste.' },
 ];
 
 // ─── Section Wrapper with animation ────────────────────────────────────────
@@ -124,9 +125,8 @@ function AnimatedSection({ children, className = '' }) {
   return (
     <div
       ref={ref}
-      className={`transition-all duration-700 ${
-        inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      } ${className}`}
+      className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        } ${className}`}
     >
       {children}
     </div>
@@ -144,6 +144,84 @@ function Ornament({ label }) {
   );
 }
 
+// ─── Old Way Interactive Demo ───────────────────────────────────────────────
+const VARIANTS = [
+  { name: 'White', img: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=80&h=80&fit=crop' },
+  { name: 'Black', img: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=80&h=80&fit=crop' },
+  { name: 'Tan', img: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=80&h=80&fit=crop' },
+  { name: 'Navy', img: 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=80&h=80&fit=crop' },
+  { name: 'Pink', img: 'https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=80&h=80&fit=crop' },
+];
+const SIZES = ['38', '40', '42', '44', '46', '48', '50'];
+
+function OldWayColorSizeDemo() {
+  const [selectedVariant, setSelectedVariant] = useState(VARIANTS[0]);
+  const [selectedSize, setSelectedSize] = useState('42');
+
+  return (
+    <div>
+      {/* Color / variant selector with thumbnails */}
+      <p className="text-xs text-gray-500 mb-2">
+        Color: <span className="font-semibold text-forest-900">{selectedVariant.name}</span>
+      </p>
+      <div className="flex gap-2 mb-5">
+        {VARIANTS.map((v) => (
+          <button
+            key={v.name}
+            onClick={() => setSelectedVariant(v)}
+            className={`w-12 h-12 rounded-lg border-2 overflow-hidden transition-all duration-200 hover:scale-105 ${selectedVariant.name === v.name
+              ? 'border-forest-600 ring-2 ring-forest-200 scale-105'
+              : 'border-gray-200 hover:border-gray-300'
+              }`}
+            title={v.name}
+          >
+            <img src={v.img} alt={v.name} className="w-full h-full object-cover" />
+          </button>
+        ))}
+      </div>
+
+      {/* Size selector */}
+      <p className="text-xs text-gray-500 mb-2">
+        Size: <span className="font-semibold text-forest-900">{selectedSize}</span>
+      </p>
+      <div className="flex flex-wrap gap-2 mb-4">
+        {SIZES.map((s) => (
+          <button
+            key={s}
+            onClick={() => setSelectedSize(s)}
+            className={`px-3.5 py-2 rounded-lg text-sm border transition-all duration-200 ${selectedSize === s
+              ? 'border-forest-600 bg-forest-50 text-forest-800 font-bold shadow-sm'
+              : 'border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50'
+              }`}
+          >
+            {s}
+          </button>
+        ))}
+      </div>
+
+      {/* Size chart link — clunky style */}
+      <div className="inline-flex items-center gap-1.5 text-xs text-gray-500 border border-gray-300 rounded-md px-2.5 py-1.5 cursor-pointer hover:bg-gray-50 transition-colors mb-5">
+        <LayoutGrid size={13} className="text-gray-400" />
+        <span className="underline underline-offset-2">View Size Chart</span>
+        <ChevronRight size={12} className="text-gray-400" />
+      </div>
+
+      {/* Confused shopper hint */}
+      <div className="bg-gold-50/60 rounded-xl p-3.5 border border-gold-200/50 mb-5">
+        <p className="text-xs text-gray-500 leading-relaxed">
+          <span className="text-gold-600 font-semibold">🤔 "Is 42 a Medium here?"</span>
+          {' '}— Every brand sizes differently. Shoppers are left guessing.
+        </p>
+      </div>
+
+      {/* Add to Cart button */}
+      <button className="w-full py-3 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition-colors">
+        Add to Cart
+      </button>
+    </div>
+  );
+}
+
 // ─── Component ─────────────────────────────────────────────────────────────
 export default function LandingPage() {
   const { t } = useLanguage();
@@ -155,19 +233,19 @@ export default function LandingPage() {
   ];
 
   const features = [
-    { icon: Ruler,      title: t('feat_1_title'), desc: t('feat_1_desc'), delay: 'stagger-1' },
+    { icon: Ruler, title: t('feat_1_title'), desc: t('feat_1_desc'), delay: 'stagger-1' },
     { icon: CalendarCheck, title: t('feat_2_title'), desc: t('feat_2_desc'), delay: 'stagger-2' },
-    { icon: Shirt,      title: t('feat_3_title'), desc: t('feat_3_desc'), delay: 'stagger-3' },
-    { icon: BarChart3,  title: t('feat_4_title'), desc: t('feat_4_desc'), delay: 'stagger-4' },
+    { icon: Shirt, title: t('feat_3_title'), desc: t('feat_3_desc'), delay: 'stagger-3' },
+    { icon: BarChart3, title: t('feat_4_title'), desc: t('feat_4_desc'), delay: 'stagger-4' },
   ];
 
   const benefits = [
     { icon: TrendingDown, label: t('ben_1'), audience: t('for_brands') },
-    { icon: ShieldCheck,  label: t('ben_2'), audience: t('for_brands') },
-    { icon: Zap,          label: t('ben_3'), audience: t('for_brands') },
-    { icon: Users,        label: t('ben_4'), audience: t('for_shoppers') },
-    { icon: Shirt,        label: t('ben_5'), audience: t('for_shoppers') },
-    { icon: Star,         label: t('ben_6'), audience: t('for_shoppers') },
+    { icon: ShieldCheck, label: t('ben_2'), audience: t('for_brands') },
+    { icon: Zap, label: t('ben_3'), audience: t('for_brands') },
+    { icon: Users, label: t('ben_4'), audience: t('for_shoppers') },
+    { icon: Shirt, label: t('ben_5'), audience: t('for_shoppers') },
+    { icon: Star, label: t('ben_6'), audience: t('for_shoppers') },
   ];
 
   const steps = [
@@ -179,8 +257,8 @@ export default function LandingPage() {
 
   const problems = [
     { icon: RefreshCw, title: t('prob_1_title'), desc: t('prob_1_desc') },
-    { icon: Frown,     title: t('prob_2_title'), desc: t('prob_2_desc') },
-    { icon: Package,   title: t('prob_3_title'), desc: t('prob_3_desc') },
+    { icon: Frown, title: t('prob_2_title'), desc: t('prob_2_desc') },
+    { icon: Package, title: t('prob_3_title'), desc: t('prob_3_desc') },
   ];
 
   const testimonials = [
@@ -252,34 +330,54 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Right: gender-neutral stat visual */}
+            {/* Right: virtual fitting flow — inputs → output */}
             <div className="relative hidden lg:flex items-center justify-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
-              <div className="relative w-80 h-80">
-                {/* Background ring */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-forest-50 to-forest-100 border border-forest-200" />
+              <div className="relative flex items-center gap-6" style={{ width: '520px', height: '400px' }}>
 
-                {/* Center M monogram */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-28 h-28 rounded-2xl bg-forest-700 flex items-center justify-center shadow-lift animate-glow-pulse">
-                    <span className="font-display text-white text-6xl font-bold leading-none">M</span>
+                {/* ── INPUTS: hijab + blouse (stacked, floating) ── */}
+                <div className="relative flex flex-col items-center z-10" style={{ minWidth: '140px' }}>
+                  {/* Hijab */}
+                  <div className="relative">
+                    <img
+                      src="/hijab.png"
+                      alt="Hijab"
+                      className="w-[130px] h-[150px] object-cover rounded-2xl shadow-card hover:shadow-lift transition-shadow duration-300 animate-float"
+                    />
+                  </div>
+                  {/* Plus badge */}
+                  <div className="w-8 h-8 rounded-full bg-gold-400 flex items-center justify-center text-forest-900 font-bold text-base shadow-soft -my-2 z-20">+</div>
+                  {/* Blouse */}
+                  <div className="relative">
+                    <img
+                      src="/blouse.png"
+                      alt="Blouse"
+                      className="w-[130px] h-[150px] object-cover rounded-2xl shadow-card hover:shadow-lift transition-shadow duration-300 animate-float"
+                      style={{ animationDelay: '0.4s' }}
+                    />
                   </div>
                 </div>
 
-                {/* Floating cards */}
-                <div className="absolute -top-6 -right-6 bg-white rounded-2xl shadow-card p-4 animate-float border border-manikan-border">
-                  <p className="text-2xl font-display text-forest-600">94%</p>
-                  <p className="text-xs text-gray-500">Fit accuracy</p>
+                {/* ── ARROW: dotted flow line ── */}
+                <div className="flex flex-col items-center gap-1.5 z-10">
+                  <svg width="80" height="10" className="text-gold-400">
+                    <line x1="0" y1="5" x2="58" y2="5" stroke="currentColor" strokeWidth="2.5" strokeDasharray="6 5" strokeLinecap="round" />
+                    <polygon points="60,0 72,5 60,10" fill="currentColor" />
+                  </svg>
+                  <span className="text-[10px] font-bold text-gold-600 tracking-[0.15em] uppercase">AI Styling</span>
                 </div>
-                <div className="absolute -bottom-4 -left-8 bg-white rounded-2xl shadow-card p-4 animate-float border border-manikan-border" style={{ animationDelay: '1s' }}>
-                  <p className="text-2xl font-display text-forest-700">42%</p>
-                  <p className="text-xs text-gray-500">Less returns</p>
-                </div>
-                <div className="absolute top-1/2 -right-14 bg-forest-700 rounded-2xl shadow-card p-3 animate-float" style={{ animationDelay: '0.5s' }}>
-                  <Sparkles size={20} className="text-white" />
-                  <p className="text-xs text-white/90 mt-1">AI Styled</p>
-                </div>
-                <div className="absolute -top-4 left-0 bg-white rounded-2xl shadow-card px-3 py-2 animate-float border border-manikan-border" style={{ animationDelay: '1.5s' }}>
-                  <p className="text-xs font-medium text-forest-700">👔 Men &nbsp;·&nbsp; 👗 Women</p>
+
+                {/* ── OUTPUT: styled girl result (larger) ── */}
+                <div className="relative flex flex-col items-center z-10">
+                  <div className="relative">
+                    <img
+                      src="/girl.png"
+                      alt="Styled result — model wearing the outfit"
+                      className="w-[190px] h-[260px] object-cover rounded-2xl shadow-lift hover:shadow-xl transition-shadow duration-300 ring-2 ring-white/80"
+                    />
+                    {/* Subtle glow behind result */}
+                    <div className="absolute -inset-3 rounded-3xl bg-forest-200/20 blur-xl -z-10" />
+                  </div>
+                  <span className="mt-2.5 text-[12px] font-semibold text-forest-600 tracking-wide">Your Look ✨</span>
                 </div>
               </div>
             </div>
@@ -317,18 +415,57 @@ export default function LandingPage() {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            {problems.map((p, i) => (
-              <AnimatedSection key={i} className={`stagger-${i + 1}`}>
-                <div className="bg-white rounded-2xl p-7 border border-manikan-border shadow-soft card-hover h-full group">
-                  <div className="w-12 h-12 bg-gold-50 rounded-2xl flex items-center justify-center mb-5 border border-gold-200 group-hover:bg-gold-100 transition-colors">
-                    <p.icon size={22} className="text-gold-600" />
-                  </div>
-                  <h3 className="font-display text-xl text-forest-900 mb-2">{p.title}</h3>
-                  <p className="text-sm text-gray-500 leading-relaxed">{p.desc}</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+            {/* ── LEFT: "Old Way" Interactive Demo ── */}
+            <AnimatedSection className="stagger-1">
+              <div className="bg-white rounded-2xl p-7 border border-manikan-border shadow-soft">
+                {/* Header */}
+                <div className="flex items-center gap-2 mb-5">
+                  <div className="w-2 h-2 rounded-full bg-red-400" />
+                  <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">The Old Way</span>
                 </div>
-              </AnimatedSection>
-            ))}
+
+                {/* Product title mock */}
+                <h4 className="font-display text-lg text-forest-900 mb-1">Classic Oxford Shirt</h4>
+                <p className="text-sm text-gray-400 mb-5">EGP 199.99</p>
+
+                {/* Color selector */}
+                <OldWayColorSizeDemo />
+              </div>
+            </AnimatedSection>
+
+            {/* ── RIGHT: Consequences (editorial, no cards) ── */}
+            <AnimatedSection className="stagger-2">
+              <div className="flex flex-col gap-10 pl-4">
+                {/* Consequence 1 */}
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Frown size={18} className="text-gold-500" />
+                    <h4 className="font-display text-xl text-forest-900">Shoppers guessing sizes</h4>
+                  </div>
+                  <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
+                    Different sizing charts per brand leads to frustration and cart abandonment.
+                  </p>
+                </div>
+
+                {/* Consequence 2 */}
+                <div>
+                  <p className="text-7xl font-display text-gold-500 leading-none mb-2">70%</p>
+                  <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
+                    of returns are due to sizing issues.
+                  </p>
+                </div>
+
+                {/* Consequence 3 */}
+                <div>
+                  <p className="text-7xl font-display text-gold-500 leading-none mb-2">$500B</p>
+                  <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
+                    in returns globally — fashion has the highest return rate of any e-commerce category.
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -356,19 +493,154 @@ export default function LandingPage() {
             </p>
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {features.map((f, i) => (
-              <AnimatedSection key={i} className={f.delay}>
-                <div className="bg-forest-800/70 backdrop-blur rounded-2xl p-6 border border-gold-400/20 card-hover h-full group hover:border-gold-400/50 transition-all">
-                  {/* Solid Sand Tan icon — fully visible on dark bg */}
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 bg-gold-400 shadow-gold">
-                    <f.icon size={22} className="text-forest-900" />
-                  </div>
-                  <h3 className="font-display text-lg text-white mb-2 group-hover:text-gold-300 transition-colors">{f.title}</h3>
-                  <p className="text-sm text-forest-300 leading-relaxed">{f.desc}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+
+            {/* ── LEFT: Mock IDE Code Editor ── */}
+            <AnimatedSection className="stagger-1">
+              <div className="bg-gray-900 rounded-xl shadow-2xl border border-white/10 overflow-hidden">
+                {/* macOS window chrome */}
+                <div className="flex items-center gap-2 px-4 py-3 bg-gray-800/80 border-b border-white/5">
+                  <div className="w-3 h-3 rounded-full bg-red-400" />
+                  <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                  <div className="w-3 h-3 rounded-full bg-green-400" />
+                  <span className="ml-3 text-xs text-gray-500 font-mono">ProductPage.jsx</span>
                 </div>
-              </AnimatedSection>
-            ))}
+
+                {/* Code content with syntax highlighting */}
+                <div className="p-5 overflow-x-auto">
+                  <pre className="text-[13px] leading-relaxed font-mono">
+                    <code>
+                      <span className="text-purple-400">import</span>
+                      <span className="text-gray-300">{' { '}</span>
+                      <span className="text-yellow-300">ManikanFit</span>
+                      <span className="text-gray-300">{' } '}</span>
+                      <span className="text-purple-400">from</span>
+                      <span className="text-green-400">{" '@manikan/react'"}</span>
+                      <span className="text-gray-500">;</span>
+                      {'\n'}{'\n'}
+                      <span className="text-purple-400">export default function</span>
+                      <span className="text-blue-300">{' ProductPage'}</span>
+                      <span className="text-gray-300">{'() {'}</span>
+                      {'\n'}
+                      <span className="text-gray-300">{'  '}</span>
+                      <span className="text-purple-400">return</span>
+                      <span className="text-gray-300">{' ('}</span>
+                      {'\n'}
+                      <span className="text-gray-500">{'    '}&lt;</span>
+                      <span className="text-blue-300">div</span>
+                      <span className="text-sky-300">{' className'}</span>
+                      <span className="text-gray-300">=</span>
+                      <span className="text-green-400">"product-details"</span>
+                      <span className="text-gray-500">&gt;</span>
+                      {'\n'}
+                      <span className="text-gray-500">{'      '}&lt;</span>
+                      <span className="text-blue-300">h1</span>
+                      <span className="text-gray-500">&gt;</span>
+                      <span className="text-gray-300">Classic Oxford Shirt</span>
+                      <span className="text-gray-500">&lt;/</span>
+                      <span className="text-blue-300">h1</span>
+                      <span className="text-gray-500">&gt;</span>
+                      {'\n'}
+                      <span className="text-gray-500">{'      '}&lt;</span>
+                      <span className="text-blue-300">span</span>
+                      <span className="text-sky-300">{' className'}</span>
+                      <span className="text-gray-300">=</span>
+                      <span className="text-green-400">"price"</span>
+                      <span className="text-gray-500">&gt;</span>
+                      <span className="text-gray-300">$199.99</span>
+                      <span className="text-gray-500">&lt;/</span>
+                      <span className="text-blue-300">span</span>
+                      <span className="text-gray-500">&gt;</span>
+                      {'\n'}{'\n'}
+                      <span className="text-gray-600">{'      '}{'//'} Drop in Manikan with one line</span>
+                      {'\n'}
+                      <span className="text-gray-500">{'      '}&lt;</span>
+                      <span className="text-yellow-300">ManikanFit</span>
+                      {'\n'}
+                      <span className="text-sky-300">{'         '}apiKey</span>
+                      <span className="text-gray-300">=</span>
+                      <span className="text-green-400">"pk_live_..."</span>
+                      {'\n'}
+                      <span className="text-sky-300">{'         '}productId</span>
+                      <span className="text-gray-300">=</span>
+                      <span className="text-green-400">"oxford-1"</span>
+                      {'\n'}
+                      <span className="text-gray-500">{'      '}/&gt;</span>
+                      {'\n'}{'\n'}
+                      <span className="text-gray-500">{'      '}&lt;</span>
+                      <span className="text-blue-300">button</span>
+                      <span className="text-gray-500">&gt;</span>
+                      <span className="text-gray-300">Add to Cart</span>
+                      <span className="text-gray-500">&lt;/</span>
+                      <span className="text-blue-300">button</span>
+                      <span className="text-gray-500">&gt;</span>
+                      {'\n'}
+                      <span className="text-gray-500">{'    '}&lt;/</span>
+                      <span className="text-blue-300">div</span>
+                      <span className="text-gray-500">&gt;</span>
+                      {'\n'}
+                      <span className="text-gray-300">{'  )'}</span>
+                      {'\n'}
+                      <span className="text-gray-300">{'}'}</span>
+                    </code>
+                  </pre>
+                </div>
+
+                {/* Bottom bar */}
+                <div className="flex items-center justify-between px-4 py-2.5 bg-gray-800/50 border-t border-white/5">
+                  <span className="text-[10px] text-gray-500 font-mono">React • JSX</span>
+                  <span className="text-[10px] text-green-400 font-mono flex items-center gap-1">
+                    <CheckCircle size={10} /> Saved
+                  </span>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            {/* ── RIGHT: Integration value props ── */}
+            <AnimatedSection className="stagger-2">
+              <div className="flex flex-col gap-8 pt-2">
+                {/* Prop 1 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-gold-400 flex items-center justify-center shrink-0 shadow-gold">
+                    <Zap size={20} className="text-forest-900" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-lg text-white mb-1">One line of code</h3>
+                    <p className="text-sm text-forest-300 leading-relaxed">Drop our widget on any product page. Works with React, Vue, Shopify, WooCommerce — any stack.</p>
+                  </div>
+                </div>
+
+                {/* Prop 2 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-gold-400 flex items-center justify-center shrink-0 shadow-gold">
+                    <Ruler size={20} className="text-forest-900" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-lg text-white mb-1">AI-powered fit prediction</h3>
+                    <p className="text-sm text-forest-300 leading-relaxed">Our model maps your brand's sizing to each shopper's body. Confidence scores build trust at checkout.</p>
+                  </div>
+                </div>
+
+                {/* Prop 3 */}
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-gold-400 flex items-center justify-center shrink-0 shadow-gold">
+                    <BarChart3 size={20} className="text-forest-900" />
+                  </div>
+                  <div>
+                    <h3 className="font-display text-lg text-white mb-1">Returns dashboard included</h3>
+                    <p className="text-sm text-forest-300 leading-relaxed">Track fit preferences, return drivers, and conversion lift — all from one analytics panel.</p>
+                  </div>
+                </div>
+
+                {/* Mini social proof */}
+                <div className="bg-forest-800/50 rounded-xl p-4 border border-gold-400/15 mt-2">
+                  <p className="text-xs text-forest-300 leading-relaxed">
+                    <span className="text-gold-400 font-semibold">"Integrated in under 10 minutes."</span>
+                    {' '}— Dina M., Head of E-Commerce, Forma Basics
+                  </p>
+                </div>
+              </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -499,10 +771,8 @@ export default function LandingPage() {
               {/* decorative top accent */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-forest-500 via-forest-300 to-forest-500" />
 
-              {/* M monogram instead of logo */}
-              <div className="w-16 h-16 rounded-2xl bg-forest-700 flex items-center justify-center mx-auto mb-6 shadow-soft">
-                <span className="font-display text-white text-3xl font-bold leading-none">M</span>
-              </div>
+              {/* Logo */}
+              <img src="/logo.png" className="h-24 w-auto object-contain mx-auto mb-6" alt="Manikan" />
 
               <h2 className="text-4xl sm:text-5xl font-display text-forest-900 mb-4 leading-tight">
                 {t('cta_title')}
